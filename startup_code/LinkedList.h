@@ -9,7 +9,20 @@ public:
     LinkedList();
     ~LinkedList();
 
-    // more functions to be added perhaps...
+    // Sort nodes by Item Name
+    sortLinkedList();
+
+    // Update node/item count (for when item is purchased -- item on hand number (number of stock for that item) is deducted)
+    updateItemCount();
+
+    // Add node/item
+    addItem();
+
+    // Remove node/item
+    removeItem();
+
+    // For resetting stock count
+    resetStockCount();
 
 private:
     // the beginning of the list
