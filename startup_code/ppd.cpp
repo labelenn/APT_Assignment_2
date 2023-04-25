@@ -9,7 +9,7 @@
 int main(int argc, char **argv)
 {
     /* validate command line arguments */
-    // TODO
+    
 
     std::cout << "Just a test, nothing implemented yet!" << std::endl;
     
