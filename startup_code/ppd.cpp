@@ -16,7 +16,7 @@ void displayMainMenu();
 int main(int argc, char **argv)
 {
     /* validate command line arguments */
-    // TODO
+    
 
     string menuChoice;
     // display main menu options
