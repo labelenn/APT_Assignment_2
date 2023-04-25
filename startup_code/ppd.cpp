@@ -10,7 +10,7 @@ using std::endl;
  * data, display the main menu, and handles the processing of options. 
  * Make sure free memory and close all files before exiting the program.
  **/
-void mainMenuOutput();
+void displayMainMenu();
 
 
 int main(int argc, char **argv)
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 
     string menuChoice;
     // display main menu options
-    mainMenuOutput();
+    displayMainMenu();
     cin >> menuChoice;
     if (menuChoice == "1") {
         //display items
@@ -50,21 +50,15 @@ int main(int argc, char **argv)
         cout << "Invalid input" << endl;
     }
 
-
-
-
-
-
-
     
     return EXIT_SUCCESS;
 }
 
-void mainMenuOutput() {
+void displayMainMenu() {
     cout << "Main Menu:" << endl;
     cout << "1.Display Items" << endl;
     cout << "2.Purchase Items" << endl;
-    cout << " 3.Save and Exit" << endl;
+    cout << "3.Save and Exit" << endl;
     cout << "Administrator-Only Menu:" << endl;
     cout << "4.Add Item" << endl;
     cout << "5.Remove Item" << endl;
