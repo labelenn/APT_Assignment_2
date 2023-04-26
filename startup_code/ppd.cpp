@@ -16,7 +16,21 @@ void mainMenuOutput();
 int main(int argc, char **argv)
 {
     /* validate command line arguments */
-    
+    try {
+        bool validNumArgs = (3 == argc);
+
+        if (validNumArgs == false) {
+            throw (validNumArgs);
+        }
+    }
+
+    catch (bool valid) {
+        cout << "Error: invalid arguments passed in." << endl;
+        cout << "Correct arguments are:" << endl;
+        cout << "       ./ppd <stockfile> <coinfile>" << endl;
+        cout << "Where <stockfile> and <coinfile> are two valid files in the expected format." << endl;
+        return EXIT_FAILURE;
+    }
 
     string menuChoice;
     // display main menu options
@@ -49,13 +63,6 @@ int main(int argc, char **argv)
     else {
         cout << "Invalid input" << endl;
     }
-
-
-
-
-
-
-
     
     return EXIT_SUCCESS;
 }
