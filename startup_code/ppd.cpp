@@ -31,6 +31,7 @@ int main(int argc, char **argv)
         cout << "Where <stockfile> and <coinfile> are two valid files in the expected format." << endl;
         return EXIT_FAILURE;
     }
+    
 
     string menuChoice;
     // display main menu options
