@@ -31,7 +31,7 @@ int main(int argc, char **argv)
         cout << "Where <stockfile> and <coinfile> are two valid files in the expected format." << endl;
         return EXIT_FAILURE;
     }
-    
+
 
     string menuChoice;
     // display main menu options
@@ -70,15 +70,15 @@ int main(int argc, char **argv)
 
 void mainMenuOutput() {
     cout << "Main Menu:" << endl;
-    cout << "1.Display Items" << endl;
-    cout << "2.Purchase Items" << endl;
-    cout << " 3.Save and Exit" << endl;
+    cout << "   1.Display Items" << endl;
+    cout << "   2.Purchase Items" << endl;
+    cout << "   3.Save and Exit" << endl;
     cout << "Administrator-Only Menu:" << endl;
-    cout << "4.Add Item" << endl;
-    cout << "5.Remove Item" << endl;
-    cout << "6.Display Coins" << endl;
-    cout << "7.Reset Stock" << endl;
-    cout << "8.Reset Coins" << endl;
-    cout << "9.Abort Program" << endl;
+    cout << "   4.Add Item" << endl;
+    cout << "   5.Remove Item" << endl;
+    cout << "   6.Display Coins" << endl;
+    cout << "   7.Reset Stock" << endl;
+    cout << "   8.Reset Coins" << endl;
+    cout << "   9.Abort Program" << endl;
     cout << "Select your option (1-9):" << endl;
 }
