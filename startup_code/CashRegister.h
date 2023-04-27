@@ -15,8 +15,13 @@ using std::vector;
 class CashRegister
 {
 public:
+    // load coin data file into an array
     void loadCoinData(string coinDataFile, Coin *coins);
+
+    // display coin data
     void displayCoins(Coin *coins);
+
+    // reset coin data
     void resetCoins(Coin *coins);
 
 };
