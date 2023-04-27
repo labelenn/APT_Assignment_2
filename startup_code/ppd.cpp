@@ -16,7 +16,7 @@ using std::vector;
  * data, display the main menu, and handles the processing of options. 
  * Make sure free memory and close all files before exiting the program.
  **/
-void mainMenuOutput();
+string displayMainMenu(string menuChoice);
 void splitString(string s, vector<string>& tokens, string delimeter);
 void loadCoinData(string coinDataFile, Coin *coins);
 
@@ -53,8 +53,7 @@ int main(int argc, char **argv)
     // MAIN MENU
     string menuChoice;
     // display main menu options
-    mainMenuOutput();
-    cin >> menuChoice;
+    displayMainMenu(menuChoice);
     if (menuChoice == "1") {
         //display items
     }
@@ -86,7 +85,7 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-void mainMenuOutput() {
+string displayMainMenu(string menuChoice) {
     cout << "Main Menu:" << endl;
     cout << "   1.Display Items" << endl;
     cout << "   2.Purchase Items" << endl;
@@ -99,6 +98,8 @@ void mainMenuOutput() {
     cout << "   8.Reset Coins" << endl;
     cout << "   9.Abort Program" << endl;
     cout << "Select your option (1-9):" << endl;
+    cin >> menuChoice;
+    return menuChoice;
 }
 
 void splitString(string s, vector<string>& tokens, string delimeter)
