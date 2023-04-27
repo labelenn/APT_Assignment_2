@@ -50,6 +50,8 @@ int main(int argc, char **argv)
 
     // MAIN MENU
     
+    // TODO - Check cin.good && cin.eof
+    // If they are not good abort program
     bool menu = true;
     do
     {
