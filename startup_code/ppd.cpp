@@ -58,57 +58,61 @@ int main(int argc, char **argv)
         // display main menu options
         string menuChoice = displayMainMenu();
 
-        if (menuChoice == "1") 
+        if (cin.good() && cin.eof())
         {
-        //display items
-        }
 
-        else if (menuChoice == "2") 
-        {
-            //purchase items
-        }
+            if (menuChoice == "1") 
+            {
+            //display items
+            }
 
-        else if (menuChoice == "3") 
-        {
-            //save and exit
-        }
+            else if (menuChoice == "2") 
+            {
+                //purchase items
+            }
 
-        else if (menuChoice == "4") 
-        {
-            //Add item
-        }
+            else if (menuChoice == "3") 
+            {
+                //save and exit
+            }
 
-        else if (menuChoice == "5") 
-        {
-            //remove item
-        }
+            else if (menuChoice == "4") 
+            {
+                //Add item
+            }
 
-        else if (menuChoice == "6") 
-        {
-            // Display coins
-            cr.displayCoins(coin);
-        }
+            else if (menuChoice == "5") 
+            {
+                //remove item
+            }
 
-        else if (menuChoice == "7") 
-        {
-            //reset stock
-        }
+            else if (menuChoice == "6") 
+            {
+                // Display coins
+                cr.displayCoins(coin);
+            }
 
-        else if (menuChoice == "8") 
-        {
-            // Reset Coins
-            cr.resetCoins(coin);
-        }
+            else if (menuChoice == "7") 
+            {
+                //reset stock
+            }
 
-        else if (menuChoice == "9") 
-        {
-            //abort program
-            menu = false;
-        }
+            else if (menuChoice == "8") 
+            {
+                // Reset Coins
+                cr.resetCoins(coin);
+            }
 
-        else 
-        {
-            cout << "Invalid input" << endl;
+            else if (menuChoice == "9") 
+            {
+                //abort program
+                menu = false;
+            }
+
+            else 
+            {
+                cout << "Invalid input" << endl;
+            }
         }
     }    
     while (menu);
