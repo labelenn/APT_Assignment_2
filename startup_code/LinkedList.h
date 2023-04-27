@@ -24,6 +24,9 @@ public:
     // For resetting stock count
     void resetStockCount();
 
+    // Display items stored in linked list
+    void displayItems();
+
 private:
     // the beginning of the list
     Node* head;
