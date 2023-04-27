@@ -1,5 +1,11 @@
 #ifndef COIN_H
 #define COIN_H
+#include <iostream>
+
+using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
 
 // Coin.h defines the coin structure for managing currency in the system. 
 #define DELIM ","  // delimiter 
@@ -22,6 +28,10 @@ public:
     
     // the count of how many of these are in the cash register
     unsigned count;
+
+    // Function to get the coin's denomination type
+    Denomination getDenom(string amount);
+
 };
 
 #endif // COIN_H
