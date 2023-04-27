@@ -23,6 +23,8 @@ enum Denomination
 class Coin
 {
 public:
+    Coin();
+    ~Coin();
     // the denomination type
     enum Denomination denom;
     

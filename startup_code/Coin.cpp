@@ -5,8 +5,16 @@ using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
+
+Coin::Coin(){
+
+}
  
- // implement functions for managing coins; this may depend on your design.
+Coin::~Coin() {
+    // cout << "Coin Destroyed" << endl;
+}
+
+// implement functions for managing coins; this may depend on your design.
 Denomination Coin::getDenom(string amount) {
     Denomination d = FIVE_CENTS;
 

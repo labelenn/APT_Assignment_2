@@ -45,7 +45,8 @@ int main(int argc, char **argv)
     CashRegister cr; 
     string dataFile = argv[2];
     Coin x[8];
-    Coin *coin = x;
+    Coin *coin = new Coin;
+    coin = x;
     cr.loadCoinData(dataFile, coin);
 
     // MAIN MENU
