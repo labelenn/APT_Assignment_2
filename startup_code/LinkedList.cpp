@@ -1,5 +1,6 @@
 #include "LinkedList.h"
 
+// Mark
 LinkedList::LinkedList() {
    head = nullptr;
 
@@ -10,9 +11,11 @@ LinkedList::~LinkedList() {
     // TODO
 }
 
+// Mark
 void LinkedList::sortLinkedList() {
     // TODO
 }
+
 
 void LinkedList::updateItemCount() {
     // TODO
@@ -30,7 +33,13 @@ void LinkedList::removeItem() {
     // TODO
 }
 
-    
+
 void LinkedList::resetStockCount() {
+    // TODO
+}
+
+
+// Lance
+void LinkedList::displayItems() {
     // TODO
 }
