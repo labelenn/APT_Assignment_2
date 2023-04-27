@@ -2,6 +2,7 @@
 #include <fstream>
 #include "LinkedList.h"
 #include "Coin.h"
+#include "CashRegister.h"
 #include <cstring>
 #include <vector>
 
@@ -16,10 +17,7 @@ using std::vector;
  * data, display the main menu, and handles the processing of options. 
  * Make sure free memory and close all files before exiting the program.
  **/
-string displayMainMenu(string menuChoice);
-void splitString(string s, vector<string>& tokens, string delimeter);
-void loadCoinData(string coinDataFile, Coin *coins);
-
+string displayMainMenu();
 
 int main(int argc, char **argv)
 {
@@ -44,40 +42,54 @@ int main(int argc, char **argv)
     // TODO: Read in stock file contents for the items and store it into a Linked List
 
     // Read in data file contents and store it into array
+    CashRegister cr; 
     string dataFile = argv[2];
-
     Coin x[8];
     Coin *coin = x;
-    loadCoinData(dataFile, coin);
+    cr.loadCoinData(dataFile, coin);
 
     // MAIN MENU
-    string menuChoice;
+    
     // display main menu options
-    displayMainMenu(menuChoice);
+    string menuChoice = displayMainMenu();
     if (menuChoice == "1") {
         //display items
     }
+
     else if (menuChoice == "2") {
         //purchase items
     }
+
     else if (menuChoice == "3") {
         //save and exit
     }
+
     else if (menuChoice == "4") {
         //Add item
     }
+
     else if (menuChoice == "5") {
         //remove item
     }
+
     else if (menuChoice == "6") {
-        //display coins
+        // Display coins
+        cr.displayCoins(coin);
     }
+
     else if (menuChoice == "7") {
         //reset stock
     }
+
     else if (menuChoice == "8") {
+        // Reset Coins
+        cr.resetCoins(coin);
+    }
+
+    else if (menuChoice == "9") {
         //abort program
     }
+
     else {
         cout << "Invalid input" << endl;
     }
@@ -85,7 +97,7 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-string displayMainMenu(string menuChoice) {
+string displayMainMenu() {
     cout << "Main Menu:" << endl;
     cout << "   1.Display Items" << endl;
     cout << "   2.Purchase Items" << endl;
@@ -98,53 +110,8 @@ string displayMainMenu(string menuChoice) {
     cout << "   8.Reset Coins" << endl;
     cout << "   9.Abort Program" << endl;
     cout << "Select your option (1-9):" << endl;
+    string menuChoice;
     cin >> menuChoice;
     return menuChoice;
 }
 
-void splitString(string s, vector<string>& tokens, string delimeter)
-{
-    tokens.clear();
-    char* _s = new char[s.length()+1];
-    strcpy(_s, s.c_str());
-
-    char * pch;
-    pch = strtok (_s, delimeter.c_str());
-    while (pch != NULL)
-    {
-        tokens.push_back(pch);
-        pch = strtok (NULL, delimeter.c_str());
-    }
-    delete[] _s;
-}
-
-void loadCoinData(string coinDataFile, Coin *coins)
-{   
-    string fileLine;
-    int currIndex = 0;
-    std::ifstream dFile;
-    dFile.open(coinDataFile);
-    
-    if (dFile.is_open()) {
-        while (dFile.peek() != EOF) {
-            std::getline(dFile, fileLine);
-
-            vector<string> coinData;
-            splitString(fileLine, coinData, DELIM);
-
-            Coin c;
-
-            Denomination d = c.getDenom(coinData[0]);
-            c.denom = d;
-            c.count = stoi(coinData[1]);
-
-            *(coins + currIndex) = c;
-            currIndex += 1;
-        }
-        dFile.close();
-    }
-
-    else {
-        cout << "Cannot open file." << endl;
-    }
-}
