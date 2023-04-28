@@ -1,15 +1,13 @@
-#include <iostream>
-#include <cstring>
-#include <fstream>
-#include <vector>
+#include "helper.h"
 
 using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
 using std::vector;
 
-void splitString(string s, vector<string>& tokens, string delimeter)
+Helper::Helper(){
+    
+}
+
+void Helper::splitString(string s, vector<string>& tokens, string delimeter)
 {
     tokens.clear();
     char* _s = new char[s.length()+1];

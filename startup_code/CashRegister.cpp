@@ -1,4 +1,5 @@
 #include "CashRegister.h"
+#include "helper.h"
 #include <iostream>
 #include <cstring>
 #include <fstream>
@@ -11,8 +12,6 @@ using std::cin;
 using std::endl;
 using std::vector;
 
-void splitString(string s, vector<string>& tokens, string delimeter);
-
 void CashRegister::loadCoinData(string coinDataFile, Coin *coins) {
     string fileLine;
     int currIndex = 0;
@@ -24,7 +23,7 @@ void CashRegister::loadCoinData(string coinDataFile, Coin *coins) {
             std::getline(dFile, fileLine);
 
             vector<string> coinData;
-            splitString(fileLine, coinData, DELIM);
+            Helper::splitString(fileLine, coinData, DELIM);
 
             Coin *c = new Coin;
 
@@ -93,21 +92,4 @@ void CashRegister::resetCoins(Coin *coins)
     }
 
     cout << "All coins has been reset to the default level of " << DEFAULT_COIN_COUNT << endl;
-}
-
-
-void splitString(string s, vector<string>& tokens, string delimeter)
-{
-    tokens.clear();
-    char* _s = new char[s.length()+1];
-    strcpy(_s, s.c_str());
-
-    char * pch;
-    pch = strtok (_s, delimeter.c_str());
-    while (pch != NULL)
-    {
-        tokens.push_back(pch);
-        pch = strtok (NULL, delimeter.c_str());
-    }
-    delete[] _s;
 }

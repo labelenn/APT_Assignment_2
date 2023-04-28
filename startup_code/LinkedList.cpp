@@ -1,5 +1,6 @@
 #include "LinkedList.h"
-#include "helper.cpp"
+#include "helper.h"
+
 #include <iostream>
 #include <cstring>
 #include <fstream>
@@ -25,7 +26,7 @@ LinkedList::LinkedList(string stockDataFile) {
             std::getline(stockFile, fileLine);
 
             vector<string> stock_list;
-            splitString(fileLine, stock_list, STOCK_DELIM);
+            Helper::splitString(fileLine, stock_list, STOCK_DELIM);
 
             // TODO - Check validity of stock info
             string id = stock_list[0];
@@ -34,7 +35,7 @@ LinkedList::LinkedList(string stockDataFile) {
             unsigned on_hand = stoi(stock_list[4]);
 
             vector<string> split_price;
-            splitString(stock_list[3], split_price, PRICE_DELIM);
+            Helper::splitString(stock_list[3], split_price, PRICE_DELIM);
             Price* price = new Price(stoi(split_price[0]), stoi(split_price[1]));
 
             Stock* stock = new Stock(id, name, description, price, on_hand);
