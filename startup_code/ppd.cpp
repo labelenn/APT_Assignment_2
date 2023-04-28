@@ -42,12 +42,12 @@ int main(int argc, char **argv)
     // TODO: Read in stock file contents for the items and store it into a Linked List
 
     // Read in data file contents and store it into array
-    CashRegister cr; 
+    CashRegister* cr = new CashRegister(); 
     string dataFile = argv[2];
     Coin x[8];
     Coin *coin = new Coin;
     coin = x;
-    cr.loadCoinData(dataFile, coin);
+    cr->loadCoinData(dataFile, coin);
 
     LinkedList* stockList = new LinkedList(argv[1]);
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
             else if (menuChoice == "6") 
             {
                 // Display coins
-                cr.displayCoins(coin);
+                cr->displayCoins(coin);
             }
 
             else if (menuChoice == "7") 
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
             else if (menuChoice == "8") 
             {
                 // Reset Coins
-                cr.resetCoins(coin);
+                cr->resetCoins(coin);
             }
 
             else if (menuChoice == "9") 
