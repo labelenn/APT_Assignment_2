@@ -39,7 +39,8 @@ private:
     Node* tail;
   
     // how many nodes are there in the list?
-    unsigned count;
+    // TODO -  Add count again
+    //unsigned count;
 };
 
 #endif  // LINKEDLIST_H

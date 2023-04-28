@@ -49,6 +49,8 @@ int main(int argc, char **argv)
     coin = x;
     cr.loadCoinData(dataFile, coin);
 
+    LinkedList* stockList = new LinkedList(argv[1]);
+
     // MAIN MENU
     bool menu = true;
     while (menu)
@@ -62,6 +64,7 @@ int main(int argc, char **argv)
             if (menuChoice == "1") 
             {
                 //display items
+                stockList->displayItems();
             }
 
             else if (menuChoice == "2") 

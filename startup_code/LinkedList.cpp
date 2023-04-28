@@ -17,7 +17,6 @@ LinkedList::LinkedList(string stockDataFile) {
    tail = nullptr;
 
     string fileLine;
-    int currIndex = 0;
     std::ifstream stockFile;
     stockFile.open(stockDataFile);
     
@@ -104,5 +103,6 @@ void LinkedList::displayItems() {
 }
 
 string LinkedList::exportData() {
-
+    // TODO
+    return "";
 }
