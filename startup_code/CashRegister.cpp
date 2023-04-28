@@ -26,13 +26,13 @@ void CashRegister::loadCoinData(string coinDataFile, Coin *coins) {
             vector<string> coinData;
             splitString(fileLine, coinData, DELIM);
 
-            Coin c;
+            Coin *c = new Coin;
 
-            Denomination d = c.getDenom(coinData[0]);
-            c.denom = d;
-            c.count = stoi(coinData[1]);
+            Denomination d = c->getDenom(coinData[0]);
+            c->denom = d;
+            c->count = stoi(coinData[1]);
 
-            *(coins + currIndex) = c;
+            *(coins + currIndex) = *c;
             currIndex += 1;
         }
         dFile.close();

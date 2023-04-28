@@ -45,25 +45,23 @@ int main(int argc, char **argv)
     CashRegister cr; 
     string dataFile = argv[2];
     Coin x[8];
-    Coin *coin = x;
+    Coin *coin = new Coin;
+    coin = x;
     cr.loadCoinData(dataFile, coin);
 
     // MAIN MENU
-    
-    // TODO - Check cin.good && cin.eof
-    // If they are not good abort program
     bool menu = true;
-    do
+    while (menu)
     {
         // display main menu options
         string menuChoice = displayMainMenu();
 
-        if (cin.good() && cin.eof())
+        if (cin.good() && !cin.eof())
         {
 
             if (menuChoice == "1") 
             {
-            //display items
+                //display items
             }
 
             else if (menuChoice == "2") 
@@ -115,7 +113,7 @@ int main(int argc, char **argv)
             }
         }
     }    
-    while (menu);
+    
     
     return EXIT_SUCCESS;
 }
