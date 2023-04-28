@@ -1,12 +1,14 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
+#define STOCK_DELIM "|"
+#define PRICE_DELIM "."
 #include "Node.h"
 
 
 class LinkedList
 {
 public:
-    LinkedList();
+    LinkedList(string);
     ~LinkedList();
 
     // Sort nodes by Item Name
@@ -27,9 +29,14 @@ public:
     // Display items stored in linked list
     void displayItems();
 
+    // Returns data in linked list as string for saving to file.
+    string exportData();
+
 private:
     // the beginning of the list
     Node* head;
+    // End of list
+    Node* tail;
   
     // how many nodes are there in the list?
     unsigned count;

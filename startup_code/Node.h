@@ -31,6 +31,12 @@
 class Price
 {
 public:
+    // Constructor
+    Price(unsigned, unsigned);
+
+    // Destructor
+    ~Price();
+
     // The dollar value, and the cents value for some price
     unsigned dollars, cents;
 };
@@ -41,6 +47,12 @@ public:
 class Stock
 {
 public:
+    // Constructor
+    Stock(string, string, string, Price*, unsigned);
+    
+    // Destructor
+    ~Stock();
+
     //the unique id for this item
     std::string id;
 
@@ -51,7 +63,7 @@ public:
     std::string description;
     
     //the price of this item
-    Price price;
+    Price* price;
     
     // how many of this item do we have on hand? 
     unsigned on_hand;    
@@ -63,7 +75,7 @@ public:
 class Node
 {
 public:
-    Node();
+    Node(Stock*, Node*);
     ~Node();
     // pointer to the data held for the node 
     Stock* data;
