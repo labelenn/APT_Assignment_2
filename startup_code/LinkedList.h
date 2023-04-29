@@ -21,7 +21,7 @@ public:
     void addItem(string, string, string, string);
 
     // Remove node/item
-    void removeItem();
+    void removeItem(string);
 
     // For resetting stock count
     void resetStockCount();

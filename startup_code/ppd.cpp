@@ -105,6 +105,11 @@ int main(int argc, char **argv)
             else if (menuChoice == "5") 
             {
                 //remove item
+                cout << "Enter the id of the item you want to remove: " << endl;
+                string removeID;
+                cin >> removeID;
+                stockList->removeItem(removeID);
+
             }
 
             else if (menuChoice == "6") 

@@ -115,8 +115,31 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
 
 
 // Kiran   
-void LinkedList::removeItem() {
-    // TODO
+void LinkedList::removeItem(string removeID) 
+{   
+    Node* currentNode = head;
+
+    // Finds id by traversing through the LinkedList
+    while (currentNode->data->id != removeID && currentNode != nullptr)
+    {
+        currentNode = currentNode->next;
+    }
+
+    // If the id was not found
+    if (currentNode == nullptr)
+    {
+        cout << "Id not found";
+        return;
+    }
+
+    // Relinks the LinkedList after after removing a node
+    Node* tmp = currentNode->next; // Creates a temporary node
+    currentNode->data = tmp->data;
+    currentNode->next = tmp->next;
+
+    // Deletes the node
+    cout << "Item removed";
+    delete tmp;
 }
 
 
