@@ -3,8 +3,6 @@
 
 #include <iostream>
 #include <cstring>
-#include <iomanip>
-#include <sstream>
 #include <fstream>
 #include <vector>
 
@@ -80,7 +78,7 @@ void LinkedList::updateItemCount() {
 // EG when inserting 'Lemon Meringue Pie' it must go between 'Lemon cheesecake' and 'Lemon Tart'
 // Apple Pie -> Lemon Cheesecake -> Lemon Tart ->  Meat Pie
 // Laura
-void LinkedList::addItem(string newItemName, string newItemDescription, string newItemPrice) {
+void LinkedList::addItem(string id, string newItemName, string newItemDescription, string newItemPrice) {
     // TODO
     // NOTE: User is prompted for item name, description, and price.
     // Refer to REQ7 for more details regarding the rest of the data for the item.
@@ -92,13 +90,6 @@ void LinkedList::addItem(string newItemName, string newItemDescription, string n
         currentNode = currentNode->next;
     }
     
-    // create static int that hold the nextID value 6, so that when we add a new item, we know which int to start at when adding ID's
-    static int nextId = 6;
-    // these lines create the ID by making sure there are 4 places, and to set the spaces not filled to 0
-    std::stringstream ss;
-    ss << "I" << std::setfill('0') << std::setw(4) << ++nextId;
-    string id = ss.str();
-    // should hold an example value of: I0006
 
     // to do, update on_hand
     int on_hand = 6;
