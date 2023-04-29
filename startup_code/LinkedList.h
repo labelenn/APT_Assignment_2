@@ -18,7 +18,7 @@ public:
     void updateItemCount();
 
     // Add node/item
-    void addItem();
+    void addItem(string, string, string);
 
     // Remove node/item
     void removeItem();

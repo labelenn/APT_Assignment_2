@@ -79,7 +79,18 @@ int main(int argc, char **argv)
 
             else if (menuChoice == "4") 
             {
-                //Add item
+                cout << "The id of the new stock will be: " << endl;
+                cout << "Enter the item name: ";
+                string newItemName;
+                getline(cin, newItemName);
+                getline(cin, newItemName);
+                cout << "Enter the item description: ";
+                string newItemDescription;
+                getline(cin, newItemDescription);
+                cout << "Enter the price for the item: ";
+                string newItemPrice;
+                cin >> newItemPrice;
+                stockList->addItem(newItemName, newItemDescription, newItemPrice);
             }
 
             else if (menuChoice == "5") 
