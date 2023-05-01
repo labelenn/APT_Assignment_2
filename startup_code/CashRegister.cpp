@@ -4,6 +4,8 @@
 #include <cstring>
 #include <fstream>
 #include <vector>
+#include <ios>
+#include <iomanip>
 
 
 using std::string;
@@ -11,6 +13,7 @@ using std::cout;
 using std::cin;
 using std::endl;
 using std::vector;
+using std::setw;
 
 void CashRegister::loadCoinData(string coinDataFile, Coin *coins) {
     string fileLine;
@@ -51,37 +54,37 @@ void CashRegister::displayCoins(Coin *coins)
 
     for (int i = 7; i >= 0; --i){
         if ((coins + i)->denom == 7){
-            cout << "10 Dollars      |";
+            cout << "10 Dollars" << setw(7) << "|";
         }
 
         else if ((coins + i)->denom == 6) {
-            cout << "5 Dollars       |";
+            cout << "5 Dollars" << setw(8) << "|";
         }
 
         else if ((coins + i)->denom == 5) {
-            cout << "2 Dollars       |";
+            cout << "2 Dollars" << setw(8) << "|";
         }
 
         else if ((coins + i)->denom == 4) {
-            cout << "1 Dollar        |";
+            cout << "1 Dollar" << setw(9) << "|";
         }
 
         else if ((coins + i)->denom == 3) {
-            cout << "50 Cents        |";
+            cout << "50 Cents" << setw(9) << "|";
         }
 
         else if ((coins + i)->denom == 2) {
-            cout << "20 Cents        |";
+            cout << "20 Cents" << setw(9) << "|";
         }
 
         else if ((coins + i)->denom == 1) {
-            cout << "10 Cents        |";
+            cout << "10 Cents" << setw(9) << "|";
         }
 
         else if ((coins + i)->denom == 0) {
-            cout << "5 Cents         |";
+            cout << "5 Cents" << setw(10) << "|";
         }
-        cout << "        " << (coins + i)->count << endl;
+        cout << setw(10) << (coins + i)->count << endl;
     }
 }
 
