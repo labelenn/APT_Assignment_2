@@ -115,31 +115,71 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
 
 
 // Kiran   
+// Fix: First and Last items in stock menu not working!!!
 void LinkedList::removeItem(string removeID) 
 {   
-    Node* currentNode = head;
+    bool match = true;
 
-    // Finds id by traversing through the LinkedList
-    while (currentNode->data->id != removeID && currentNode != nullptr)
+    while (match == true) 
     {
-        currentNode = currentNode->next;
+        // If there are no items in the stock menu
+        if (head == nullptr)
+        {
+            cout << "No items to remove" << endl;
+            match = false;
+        }
+        
+        // If the first node matches
+        if (head->data->id == removeID)
+        {
+            cout << "FIRST" << endl;
+
+            Node* tmp = head;
+            head = head->next;
+            delete tmp;
+            cout << "Item removed" << endl;
+            match = false;
+        }
+
+        // If the last node matches
+        if (tail->data->id == removeID)
+        {
+            cout << "LAST" << endl;
+
+            cout << "Item removed" << endl;
+            delete tail;
+            match = false;
+        }
+
+        Node* currentNode = head;
+
+        // Finds id by traversing through the LinkedList
+        while (currentNode->data->id != removeID && currentNode != nullptr)
+        {
+            currentNode = currentNode->next;
+        }
+
+        // If the id was not found
+        if (currentNode == nullptr)
+        {
+            cout << "Id not found" << endl;
+            match = false;
+        }
+
+        // Relinks the LinkedList after after removing a node
+        Node* tmp = currentNode->next; // Creates a temporary node
+        currentNode->data = tmp->data;
+        currentNode->next = tmp->next;
+
+        // Deletes the node
+
+        cout << "ALL" << endl;
+
+        delete tmp;
+        cout << "Item removed" << endl;
+        match = false;
     }
-
-    // If the id was not found
-    if (currentNode == nullptr)
-    {
-        cout << "Id not found";
-        return;
-    }
-
-    // Relinks the LinkedList after after removing a node
-    Node* tmp = currentNode->next; // Creates a temporary node
-    currentNode->data = tmp->data;
-    currentNode->next = tmp->next;
-
-    // Deletes the node
-    cout << "Item removed";
-    delete tmp;
+    return;
 }
 
 
