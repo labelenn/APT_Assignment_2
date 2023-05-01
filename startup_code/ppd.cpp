@@ -80,9 +80,10 @@ int main(int argc, char **argv)
             }
 
             else if (menuChoice == "4") 
-            {
+            {   
+    
                 // create static int that hold the nextID value 5, so that when we add a new item, we know which int to start at when adding ID's
-                static int nextId = 5;
+                static int nextId = stockList->lastItemID;
                 // these lines create the ID by making sure there are 4 places, and to set the spaces not filled to 0
                 std::stringstream ss;
                 ss << "I" << std::setfill('0') << std::setw(4) << ++nextId;

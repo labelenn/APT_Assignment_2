@@ -32,6 +32,9 @@ public:
     // Returns data in linked list as string for saving to file.
     string exportData();
 
+    // ID of the last item in the inventory
+    int lastItemID;
+
 private:
     // the beginning of the list
     Node* head;

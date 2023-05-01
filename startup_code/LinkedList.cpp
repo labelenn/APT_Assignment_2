@@ -7,6 +7,7 @@
 #include <vector>
 #include <ios>
 #include <iomanip>
+#include <string.h>
 
 using std::string;
 using std::cout;
@@ -37,6 +38,8 @@ LinkedList::LinkedList(string stockDataFile) {
             string description = stock_list[1];
             unsigned on_hand = stoi(stock_list[4]);
 
+            
+
             vector<string> split_price;
             Helper::splitString(stock_list[3], split_price, PRICE_DELIM);
             Price* price = new Price(stoi(split_price[0]), stoi(split_price[1]));
@@ -55,9 +58,13 @@ LinkedList::LinkedList(string stockDataFile) {
                 tail = node;
             }
 
+            // Store last itemID for addItem function
+            lastItemID = stoi(id.substr(1,5));
+
         }
 
         stockFile.close();
+
     }
 
     //TODO call sort linked list
@@ -95,7 +102,7 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
     
 
     // to do, update on_hand
-    int on_hand = 6;
+    int on_hand = DEFAULT_STOCK_LEVEL;
 
     // create a vectore string splitPrice
     vector<string> splitPrice;
