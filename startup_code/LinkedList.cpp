@@ -5,12 +5,15 @@
 #include <cstring>
 #include <fstream>
 #include <vector>
+#include <ios>
+#include <iomanip>
 
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
 using std::vector;
+using std::setw;
 
 // Mark
 LinkedList::LinkedList(string stockDataFile) { 
@@ -190,9 +193,32 @@ void LinkedList::resetStockCount() {
 
 // Lance
 void LinkedList::displayItems() {
+    int idPrintWidth = 6;
+    int namePrintWidth = 40;
+    int availablePrintWidth = 12;
+
+    cout << "Items Menu" << endl;
+    cout << "----------" << endl;
+    cout << "ID" << setw(idPrintWidth - 2) << "|";
+    cout << "Name" << setw(namePrintWidth - 4) << "|";
+    cout << " Available " << "|";
+    cout << " Price  " << endl;
+    cout << "------------------------------------------------------------------" << endl;
+
     Node* currentNode = head;
     while (currentNode != nullptr) {
-        cout << currentNode->data->name << endl;
+        string itemName = currentNode->data->name;
+        string itemCount = std::to_string(currentNode->data->on_hand);
+        cout << currentNode->data->id << "|";
+        cout << itemName << setw(namePrintWidth - itemName.size()) << "|";
+        cout << currentNode->data->on_hand << setw(availablePrintWidth - itemCount.size()) << "|";
+        if (currentNode->data->price->cents == 0) {
+            cout << "$ " << currentNode->data->price->dollars << "." << "00" << endl;
+        }
+        else {
+            cout << "$ " << currentNode->data->price->dollars << "." << currentNode->data->price->cents << endl;
+        }
+        
         currentNode = currentNode->next;
     }
 }

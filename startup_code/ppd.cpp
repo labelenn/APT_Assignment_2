@@ -40,10 +40,10 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    // string stockFile = argv[1];
-    // TODO: Read in stock file contents for the items and store it into a Linked List
 
-    // Read in data file contents and store it into array
+    // Read in data file contents
+    LinkedList* stockList = new LinkedList(argv[1]);
+
     CashRegister* cr = new CashRegister(); 
     string dataFile = argv[2];
     Coin x[8];
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
     coin = x;
     cr->loadCoinData(dataFile, coin);
 
-    LinkedList* stockList = new LinkedList(argv[1]);
+    
 
     // MAIN MENU
     bool menu = true;
