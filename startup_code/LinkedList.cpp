@@ -37,7 +37,7 @@ LinkedList::LinkedList(string stockDataFile) {
             // TODO - Check validity of stock info
             string id = stock_list[0];
             string name = stock_list[1];
-            string description = stock_list[1];
+            string description = stock_list[2];
             unsigned on_hand = stoi(stock_list[4]);
 
             
@@ -110,7 +110,7 @@ void LinkedList::sortLinkedList() {
 
 }
 
-
+// Kiran
 void LinkedList::updateItemCount() {
     // TODO
 }
@@ -156,46 +156,53 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
 
 
 // Kiran   
-// Fix: First and Last items in stock menu not working!!!
 void LinkedList::removeItem(string removeID) 
 {   
-    bool match = true;
-
-    while (match == true) 
+    // If there are no items in the stock menu
+    if (head == nullptr)
     {
-        // If there are no items in the stock menu
-        if (head == nullptr)
-        {
-            cout << "No items to remove" << endl;
-            match = false;
-        }
+        cout << "The task Remove Item failed to run successfully." << endl;
+    }
         
-        // If the first node matches
-        if (head->data->id == removeID)
-        {
-            cout << "FIRST" << endl;
+    // If the first node matches
+    else if (head->data->id == removeID)
+    {
+        Node* tmp = head;
+        head = head->next;
 
-            Node* tmp = head;
-            head = head->next;
-            delete tmp;
-            cout << "Item removed" << endl;
-            match = false;
+        cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - " 
+        << tmp->data->description << "\"" << " has been removed from the system." << endl;
+
+        delete tmp;
+    }
+
+    // If the last node matches
+    else if (tail->data->id == removeID)
+    {
+        
+        Node* currentNode = head;
+        Node* tmp = tail;
+
+        while (currentNode->next->next != nullptr)
+        {
+            currentNode = currentNode->next;
         }
 
-        // If the last node matches
-        if (tail->data->id == removeID)
-        {
-            cout << "LAST" << endl;
+        currentNode->next = nullptr;
 
-            cout << "Item removed" << endl;
-            delete tail;
-            match = false;
-        }
+        cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - " 
+        << tmp->data->description << "\"" << " has been removed from the system." << endl;
 
+        delete tmp;
+    }
+
+    // If not the first or last node
+    else 
+    {
         Node* currentNode = head;
 
         // Finds id by traversing through the LinkedList
-        while (currentNode->data->id != removeID && currentNode != nullptr)
+        while (currentNode != nullptr && currentNode->data->id != removeID)
         {
             currentNode = currentNode->next;
         }
@@ -203,22 +210,21 @@ void LinkedList::removeItem(string removeID)
         // If the id was not found
         if (currentNode == nullptr)
         {
-            cout << "Id not found" << endl;
-            match = false;
-        }
-
+            cout << "The task Remove Item failed to run successfully." << endl;
+        } 
+        
         // Relinks the LinkedList after after removing a node
-        Node* tmp = currentNode->next; // Creates a temporary node
-        currentNode->data = tmp->data;
-        currentNode->next = tmp->next;
+        else 
+        {
+            Node* tmp = currentNode->next;
+            currentNode->data = tmp->data;
+            currentNode->next = tmp->next;
 
-        // Deletes the node
+            cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - " 
+            << tmp->data->description << "\"" << " has been removed from the system." << endl;
 
-        cout << "ALL" << endl;
-
-        delete tmp;
-        cout << "Item removed" << endl;
-        match = false;
+            delete tmp;
+        }
     }
     return;
 }
