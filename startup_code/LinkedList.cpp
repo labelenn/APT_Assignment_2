@@ -4,7 +4,9 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
+#include <string>
 #include <vector>
+#include <algorithm>
 #include <ios>
 #include <iomanip>
 #include <string.h>
@@ -67,16 +69,45 @@ LinkedList::LinkedList(string stockDataFile) {
 
     }
 
-    //TODO call sort linked list
+    LinkedList::sortLinkedList();
 }
 
 LinkedList::~LinkedList() {
     cout << "Linked List destroyed" << endl;
 }
 
-// Mark
+// Laura
 void LinkedList::sortLinkedList() {
-    // TODO
+
+    // nothing to sort if head is null or theres only 1 item in the list
+    if (head == nullptr || head->next == nullptr) {
+        return; 
+    }
+
+    Node* currentNode = head;
+    Node* nextNode = head->next;
+    
+    // while the next node is not null
+    while (nextNode != nullptr) {
+        // while the current node does not equal the next node
+        while (currentNode != nextNode) {
+            string currentName = currentNode->data->name;
+            string nextName = nextNode->data->name;
+            // if lexographically nextName comes before currentName
+            if (currentName.compare(nextName) > 0) {
+                // swap the data of currentNode and nextNode
+                Stock* temp = currentNode->data;
+                currentNode->data = nextNode->data;
+                nextNode->data = temp;
+            }
+            // get next node
+            currentNode = currentNode->next;
+        }
+        // reset the pointers and names for the next iteration
+        currentNode = head;
+        nextNode = nextNode->next;
+    }
+
 }
 
 
@@ -107,7 +138,7 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
     // create a vectore string splitPrice
     vector<string> splitPrice;
     Helper::splitString(newItemPrice, splitPrice, ".");
-    // create new Price * price and Stock* item
+    // create new Price* price and Stock* item
     Price* price = new Price(stoi(splitPrice[0]), stoi(splitPrice[1]));
     Stock* item = new Stock(id, newItemName, newItemDescription, price, on_hand);
 
@@ -117,7 +148,7 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
     currentNode->next = newNode;
     newNode = tail;
 
-    // here is where I call LinkedList::sortLinkedList();
+    LinkedList::sortLinkedList();
     
     // display new item information to show it has indeed been added to the menu
     cout << "This item \"" << newItemName << " - " << newItemDescription << "\", has now been added to the menu." << endl;
