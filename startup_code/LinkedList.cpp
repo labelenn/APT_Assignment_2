@@ -130,7 +130,7 @@ void LinkedList::removeItem(string removeID)
     // If there are no items in the stock menu
     if (head == nullptr)
     {
-        cout << "The menu is empty and has no items!" << endl;
+        cout << "The task Remove Item failed to run successfully." << endl;
     }
         
     // If the first node matches
