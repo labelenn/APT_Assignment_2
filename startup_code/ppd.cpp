@@ -5,6 +5,7 @@
 #include "CashRegister.h"
 #include <iomanip>
 #include <sstream>
+#include <cctype>
 #include <cstring>
 #include <vector>
 
@@ -82,21 +83,36 @@ int main(int argc, char **argv)
             else if (menuChoice == "4") 
             {   
     
-                // create static int that hold the nextID value 5, so that when we add a new item, we know which int to start at when adding ID's
                 static int nextId = stockList->lastItemID;
-                // these lines create the ID by making sure there are 4 places, and to set the spaces not filled to 0
                 std::stringstream ss;
                 ss << "I" << std::setfill('0') << std::setw(4) << ++nextId;
                 string id = ss.str();
-                // should hold an example value of: I0006
                 cout << "The id of the new stock will be: " << id << endl;
+                
                 cout << "Enter the item name: ";
                 string newItemName;
                 getline(cin, newItemName);
                 getline(cin, newItemName);
+                // Convert the first letter of each word to uppercase
+                bool makeUppercase = true;
+                for (int i = 0; i < newItemName.length(); i++) {
+                    // check if index is a letter
+                    if (makeUppercase && isalpha(newItemName[i])) {
+                        newItemName[i] = toupper(newItemName[i]);
+                        makeUppercase = false;
+                    }
+                    else if (newItemName[i] == ' ') {
+                        makeUppercase = true;
+                    }
+                    else if (makeUppercase == false && isalpha(newItemName[i])){
+                        newItemName[i] = tolower(newItemName[i]);
+                    }
+                }
+                
                 cout << "Enter the item description: ";
                 string newItemDescription;
                 getline(cin, newItemDescription);
+                
                 cout << "Enter the price for the item: ";
                 string newItemPrice;
                 cin >> newItemPrice;
