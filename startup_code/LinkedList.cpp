@@ -110,6 +110,22 @@ void LinkedList::sortLinkedList() {
 
 }
 
+bool LinkedList::itemAvailability(string itemID) {
+
+    Node* currentNode = head;
+    while (currentNode->next != nullptr && currentNode->data->id != itemID) {
+        currentNode = currentNode->next;
+    }
+
+    bool itemAvailable = false;
+    if (currentNode->data->on_hand > 0) {
+        itemAvailable = true;
+    }
+
+    return itemAvailable;
+
+}
+
 // Kiran
 void LinkedList::updateItemCount(string selectedID) 
 {
@@ -120,7 +136,7 @@ void LinkedList::updateItemCount(string selectedID)
         currentNode = currentNode->next;
     }
 
-    cout << currentNode->data->on_hand << endl;
+    // cout << currentNode->data->on_hand << endl;
     if (currentNode->data->on_hand == 0)
     {
         cout << "We have no more of this item." << endl;

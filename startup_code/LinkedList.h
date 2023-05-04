@@ -14,6 +14,9 @@ public:
     // Sort nodes by Item Name
     void sortLinkedList();
 
+    // Check item availability (returns true if item has stock)
+    bool itemAvailability(string);
+
     // Update node/item count (for when item is purchased -- item on hand number (number of stock for that item) is deducted)
     void updateItemCount(string);
 

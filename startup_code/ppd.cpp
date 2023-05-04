@@ -21,7 +21,7 @@ using std::vector;
  * Make sure free memory and close all files before exiting the program.
  **/
 string displayMainMenu();
-void purchaseItem();
+void purchaseItem(LinkedList *stock);
 
 int main(int argc, char **argv)
 {
@@ -77,11 +77,9 @@ int main(int argc, char **argv)
             else if (menuChoice == "2") 
             {
                 //purchase items
+                purchaseItem(stockList);
 
-                // Only works if ID is correct
-                // Has an inbuilt checker if stock is 0, so stock won't be negative
-                string selectedID = "I0003";
-                stockList->updateItemCount(selectedID);
+                
             }
 
             else if (menuChoice == "3") 
@@ -101,10 +99,10 @@ int main(int argc, char **argv)
                 cout << "Enter the item name: ";
                 string newItemName;
                 getline(cin, newItemName);
-                getline(cin, newItemName);
                 // Convert the first letter of each word to uppercase
                 bool makeUppercase = true;
-                for (int i = 0; i < newItemName.length(); i++) {
+                int itemNameLength = newItemName.length();
+                for (int i = 0; i < itemNameLength; i++) {
                     // check if index is a letter
                     if (makeUppercase && isalpha(newItemName[i])) {
                         newItemName[i] = toupper(newItemName[i]);
@@ -192,10 +190,22 @@ string displayMainMenu() {
     return menuChoice;
 }
 
-void purchaseItem() {
+void purchaseItem(LinkedList *stock) {
     cout << "Purchase Item" << endl;
     cout << "-------------" << endl;
     cout << "Please enter the id of the item you wish to purchase: ";
+    string itemID;
+    getline(cin, itemID);
+    
+    bool available = stock->itemAvailability(itemID);
+    if (available == true) {
+        cout << "Item available" << endl;
+    }
+
+    else {
+        cout << "Item unavaiable" << endl;
+    }
+
 
 
 }
