@@ -111,8 +111,27 @@ void LinkedList::sortLinkedList() {
 }
 
 // Kiran
-void LinkedList::updateItemCount() {
-    // TODO
+void LinkedList::updateItemCount(string selectedID) 
+{
+    Node* currentNode = head;
+    // Finds id by traversing through the LinkedList
+    while (currentNode != nullptr && currentNode->data->id != selectedID)
+    {
+        currentNode = currentNode->next;
+    }
+
+    cout << currentNode->data->on_hand << endl;
+    if (currentNode->data->on_hand == 0)
+    {
+        cout << "We have no more of this item." << endl;
+    }
+
+    else 
+    {
+        currentNode->data->on_hand--;
+    }
+
+    return;
 }
 
 // Add item in correct sort spot
@@ -226,6 +245,7 @@ void LinkedList::removeItem(string removeID)
             delete tmp;
         }
     }
+    
     return;
 }
 

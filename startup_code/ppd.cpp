@@ -73,6 +73,11 @@ int main(int argc, char **argv)
             else if (menuChoice == "2") 
             {
                 //purchase items
+
+                // Only works if ID is correct
+                // Has an inbuilt checker if stock is 0, so stock won't be negative
+                string selectedID = "I0003";
+                stockList->updateItemCount(selectedID);
             }
 
             else if (menuChoice == "3") 
