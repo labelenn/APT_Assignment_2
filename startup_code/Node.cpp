@@ -17,7 +17,7 @@ Price::Price(unsigned dollars, unsigned cents) {
     this->cents = cents;
 };
 Price::~Price() {
-    cout << "Price destroyed" << endl;
+    // cout << "Price destroyed" << endl;
 };
 
 
@@ -31,5 +31,5 @@ Stock::Stock(string id, string name, string description, Price* price, unsigned 
 };
 Stock::~Stock() {
     price->~Price();
-    cout << "Stock destroyed" << endl;
+    // cout << "Stock destroyed" << endl;
 };

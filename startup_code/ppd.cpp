@@ -191,48 +191,127 @@ string displayMainMenu() {
 }
 
 void purchaseItem(LinkedList *stock) {
-    cout << "Purchase Item" << endl;
-    cout << "-------------" << endl;
-    cout << "Please enter the id of the item you wish to purchase: ";
-    string itemID;
-    getline(cin, itemID);
     
-    bool purchaseDone = false;
+    // Find item in the list
+    string itemID;
+    bool cancelPurchase = false;
 
-    while (purchaseDone != true)
+    bool itemFound = false;
+    while (itemFound != true)
     {   
+        bool inputExiter = false;
+        while (cin.good() && !cin.eof() && inputExiter != true)
+        {
+            cout << "Purchase Item" << endl;
+            cout << "-------------" << endl;
+            cout << "Please enter the id of the item you wish to purchase: "; 
+            getline(cin, itemID);
 
-        // Check stock availability
-        bool available = stock->itemAvailability(itemID);
-        if (available == true) {
-            // Prompt for payment
-            cout << "Please hand over the money - type in the value of each note/coin in cents." << endl;
-            cout << "Press enter or ctrl-d on a new line to cancel this purhcase:" << endl;
-            bool cancel = false;
-
-            while (cin.good() && !cin.eof() && cancel != true) {
-                cout << "You still need to give us " << "{Amount}" << ": " << endl;
-                string userAmount;
-                getline(cin, userAmount);
-
-                if (userAmount.size() == 0 || cin.eof()) {
-                    cancel = true;
-                    purchaseDone = true;
-                } 
+            if (itemID.size() == 0 || cin.eof()) {
+                cout << "The task Purchase Item failed to run successfully." << endl;
+                cancelPurchase = true;
+                itemFound = true;
+                inputExiter = true;
             }
+            
+            else {
+                // Check if item is in stock
+                bool itemInInventory = stock->findItem(itemID);
+                if (itemInInventory == false) {
+                    cout << "Error: the id you entered was not valid. Please try again." << endl;
+                }
 
-            if (cancel == true) {
-                cout << "Purchase cancelled" << endl;
+                else {
+                    itemFound = true;
+                    inputExiter = true;
+                }
             }
         }
-
-        else {
-            cout << "Item unavaiable" << endl;
-            purchaseDone = true;
-        }  
-
     }
 
+    if (cancelPurchase != true) {
+        // Store item into a Stock object
+        Stock item = stock->getItem(itemID);
 
+        // PURCHASE PROCESS
+        bool purchaseDone = false;
+        while (purchaseDone != true)
+        {   
+
+            // Check stock availability
+            bool available = stock->itemAvailability(itemID);
+            if (available == true) {
+                vector<string> coins;
+                cout << "You have selected \"" << item.name << " - " << item.description << "\". ";
+                cout << "This will cost you $ " << item.price->dollars << "." << item.price->cents << "." << endl;
+
+                // Prompt for payment
+                cout << "Please hand over the money - type in the value of each note/coin in cents." << endl;
+                cout << "Press enter or ctrl-d on a new line to cancel this purhcase:" << endl;
+                bool cancel = false;
+
+                int requiredAmount = (item.price->dollars * 100) + item.price->cents;
+                int currAmount = 0;
+                while (cin.good() && !cin.eof() && cancel != true && currAmount < requiredAmount) {
+                    int remainingAmount = requiredAmount - currAmount;
+                    if  (remainingAmount >= 100) {
+                        int dollar = (remainingAmount / 100);
+                        int cents = remainingAmount - ((remainingAmount / 100) * 100);
+                        cout << "You still need to give us $" << dollar << "." << cents << ": " << endl;
+                    }
+
+                    else {
+                        cout << "You still need to give us $0." << remainingAmount << ": " << endl;
+                    }
+                    
+                    string userAmount;
+                    getline(cin, userAmount);
+
+                    if (userAmount.size() == 0 || cin.eof()) {
+                        int numCoins = coins.size();
+                        cout << "Change of mind - here is your change:" << endl;
+                        for (int i = 0; i < numCoins; i++) {
+                            cout << coins[i] << " ";
+                        }
+                        cout << endl;
+                        cancel = true;
+                        purchaseDone = true;
+                    }
+
+                    // TODO: INPUT VALIDATION FOR AMOUNT AND DENOMINATION
+                    else {
+                    coins.push_back(userAmount);
+                    currAmount += stoi(userAmount);
+                    }
+                }
+
+                // TODO: PURCHASE COMPLETED
+                if (currAmount >= requiredAmount) {
+                    int change = currAmount - requiredAmount;
+                    
+                    if  (change >= 100) {
+                        int dollar = (change / 100);
+                        int cents = change - ((change / 100) * 100);
+                        cout << "Here is your " << item.name << " and your change of $" << dollar << "." << cents << ": ";
+                    }
+
+                    else {
+                        cout << "Here is your " << item.name << " and your change of $0." << change << ": ";
+
+                    }
+                    
+                    // TODO: Print out list of coins for change
+                    cout << endl;
+                    purchaseDone = true;
+                }
+            }
+
+            else {
+                cout << "Item unavaiable" << endl;
+                purchaseDone = true;
+            }  
+
+        }
+    }
 
 }

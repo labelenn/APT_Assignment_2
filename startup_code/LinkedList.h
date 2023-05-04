@@ -14,6 +14,12 @@ public:
     // Sort nodes by Item Name
     void sortLinkedList();
 
+    // Check if the given item id is in stock list
+    bool findItem(string itemID);
+
+    // Get the item
+    Stock getItem(string itemID);
+
     // Check item availability (returns true if item has stock)
     bool itemAvailability(string);
 

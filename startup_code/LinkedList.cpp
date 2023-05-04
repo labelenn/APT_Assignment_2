@@ -110,6 +110,30 @@ void LinkedList::sortLinkedList() {
 
 }
 
+bool LinkedList::findItem(string itemID) {
+    Node* currentNode = head;
+    bool itemFound = false;
+    while (currentNode->next != nullptr && currentNode->data->id != itemID) {
+
+        currentNode = currentNode->next;
+
+        if (currentNode->data->id == itemID) {
+            itemFound = true;
+        }
+    }
+
+    return itemFound;
+}
+
+Stock LinkedList::getItem(string itemID) {
+    Node* currentNode = head;
+    while (currentNode->next != nullptr && currentNode->data->id != itemID) {
+        currentNode = currentNode->next;
+    }
+
+    return *currentNode->data;
+}
+
 bool LinkedList::itemAvailability(string itemID) {
 
     Node* currentNode = head;
