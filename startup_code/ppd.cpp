@@ -197,13 +197,40 @@ void purchaseItem(LinkedList *stock) {
     string itemID;
     getline(cin, itemID);
     
-    bool available = stock->itemAvailability(itemID);
-    if (available == true) {
-        cout << "Item available" << endl;
-    }
+    bool purchaseDone = false;
 
-    else {
-        cout << "Item unavaiable" << endl;
+    while (purchaseDone != true)
+    {   
+
+        // Check stock availability
+        bool available = stock->itemAvailability(itemID);
+        if (available == true) {
+            // Prompt for payment
+            cout << "Please hand over the money - type in the value of each note/coin in cents." << endl;
+            cout << "Press enter or ctrl-d on a new line to cancel this purhcase:" << endl;
+            bool cancel = false;
+
+            while (cin.good() && !cin.eof() && cancel != true) {
+                cout << "You still need to give us " << "{Amount}" << ": " << endl;
+                string userAmount;
+                getline(cin, userAmount);
+
+                if (userAmount.size() == 0 || cin.eof()) {
+                    cancel = true;
+                    purchaseDone = true;
+                } 
+            }
+
+            if (cancel == true) {
+                cout << "Purchase cancelled" << endl;
+            }
+        }
+
+        else {
+            cout << "Item unavaiable" << endl;
+            purchaseDone = true;
+        }  
+
     }
 
 
