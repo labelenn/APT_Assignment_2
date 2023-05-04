@@ -20,6 +20,7 @@ using std::vector;
  * Make sure free memory and close all files before exiting the program.
  **/
 string displayMainMenu();
+void purchaseItem();
 
 int main(int argc, char **argv)
 {
@@ -55,13 +56,16 @@ int main(int argc, char **argv)
 
     // MAIN MENU
     bool menu = true;
-    while (menu)
+    while (menu && cin.good() && !cin.eof())
     {
         // display main menu options
         string menuChoice = displayMainMenu();
 
-        if (cin.good() && !cin.eof())
-        {
+        if (menuChoice.size() == 0) {
+            menu = false;
+        }
+
+        else {
 
             if (menuChoice == "1") 
             {
@@ -81,7 +85,7 @@ int main(int argc, char **argv)
 
             else if (menuChoice == "4") 
             {   
-    
+
                 // create static int that hold the nextID value 5, so that when we add a new item, we know which int to start at when adding ID's
                 static int nextId = stockList->lastItemID;
                 // these lines create the ID by making sure there are 4 places, and to set the spaces not filled to 0
@@ -93,13 +97,12 @@ int main(int argc, char **argv)
                 cout << "Enter the item name: ";
                 string newItemName;
                 getline(cin, newItemName);
-                getline(cin, newItemName);
                 cout << "Enter the item description: ";
                 string newItemDescription;
                 getline(cin, newItemDescription);
                 cout << "Enter the price for the item: ";
                 string newItemPrice;
-                cin >> newItemPrice;
+                getline(cin, newItemPrice);
                 stockList->addItem(id, newItemName, newItemDescription, newItemPrice);
             }
 
@@ -140,7 +143,9 @@ int main(int argc, char **argv)
             {
                 cout << "Invalid input" << endl;
             }
+
         }
+        
     }    
     
     
@@ -161,7 +166,14 @@ string displayMainMenu() {
     cout << "   9.Abort Program" << endl;
     cout << "Select your option (1-9):" << endl;
     string menuChoice;
-    cin >> menuChoice;
+    std::getline(cin, menuChoice);
     return menuChoice;
 }
 
+void purchaseItem() {
+    cout << "Purchase Item" << endl;
+    cout << "-------------" << endl;
+    cout << "Please enter the id of the item you wish to purchase: ";
+
+
+}
