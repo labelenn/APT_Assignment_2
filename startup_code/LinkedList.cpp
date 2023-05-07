@@ -279,13 +279,13 @@ void LinkedList::removeItem(string removeID)
         // Relinks the LinkedList after after removing a node
         else
         {
+            cout << "\"" << currentNode->data->id << " - " << currentNode->data->name << " - "
+                 << currentNode->data->description << "\""
+                 << " has been removed from the system." << endl;
+
             Node *tmp = currentNode->next;
             currentNode->data = tmp->data;
             currentNode->next = tmp->next;
-
-            cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - "
-                 << tmp->data->description << "\""
-                 << " has been removed from the system." << endl;
 
             delete tmp;
         }
