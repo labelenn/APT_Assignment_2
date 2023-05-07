@@ -6,6 +6,8 @@
 #include <vector>
 #include <ios>
 #include <iomanip>
+#include <algorithm>
+#include <map>
 
 
 using std::string;
@@ -14,6 +16,9 @@ using std::cin;
 using std::endl;
 using std::vector;
 using std::setw;
+using std::sort;
+using std::map;
+using std::count;
 
 void CashRegister::loadCoinData(string coinDataFile, Coin *coins) {
     string fileLine;
@@ -35,9 +40,13 @@ void CashRegister::loadCoinData(string coinDataFile, Coin *coins) {
             c->count = stoi(coinData[1]);
 
             *(coins + currIndex) = *c;
+            denoms.push_back(stoi(coinData[0]));
             currIndex += 1;
+
+            
         }
         dFile.close();
+        denomsCount = currIndex;
     }
 
     else {
@@ -96,3 +105,97 @@ void CashRegister::resetCoins(Coin *coins)
 
     cout << "All coins has been reset to the default level of " << DEFAULT_COIN_COUNT << endl;
 }
+
+vector<string> CashRegister::getChange(int change) {
+    sort(denoms.begin(), denoms.end());
+ 
+    // Initialize result
+    vector<string> coins;
+ 
+    // Traverse through all denomination
+    for (int i = denomsCount - 1; i >= 0; i--) {
+ 
+        // Find denominations
+        while (change >= denoms[i]) {
+            change -= denoms[i];
+            coins.push_back(std::to_string(denoms[i]));
+        }
+    }
+
+    return coins;
+}
+
+bool CashRegister::checkCoinAvailability(vector<string> change, Coin *coins) {
+    bool coinsAvailable = true;
+    map<string, int> coinCount;
+
+    int numChange = change.size();
+    for (int i = 0; i < numChange; i++) {
+        coinCount[change[i]] = count(change.begin(), change.end(), change[i]);
+    }
+
+    map<string, int>::iterator it = coinCount.begin();
+    while (it != coinCount.end()) {
+        Coin c;
+        c.denom = c.getDenom(it->first);
+
+        for (int i = 0; i < denomsCount; i++) {
+            if (c.denom == (coins+i)->denom) {
+                int count = (coins+i)->count;
+                if (it->second > count) {
+                    coinsAvailable = false;
+                }
+            }
+        }
+        ++it;
+    }
+
+    return coinsAvailable;
+}
+
+void CashRegister::updateCoinCount(vector<string> coins, Coin *registerCoins, int mode) {
+
+    int numCoins = coins.size();
+    for (int i = 0; i < numCoins; i++) {
+        for (int j = 0; j < denomsCount; j++) {
+            Coin c;
+            c.denom = c.getDenom(coins[i]);
+
+            if (c.denom == (registerCoins + j)->denom) {
+                if (mode == 1) {
+                    (registerCoins+j)->count += 1;
+                }
+
+                else {
+                    (registerCoins+j)->count -= 1;
+                }
+            }
+        }
+    }
+}
+
+bool CashRegister::validDenomination(string amount) {
+    bool validDenom = false;
+    for (int i = 0; i < denomsCount; i++) {
+        if (stoi(amount) == denoms[i]) {
+            validDenom = true;
+        }
+    }
+
+    return validDenom;
+}
+
+string CashRegister::getValueInDollars(string userAmount) {
+    int amount = stoi(userAmount);
+    string value;
+
+    if (amount >= 100) {
+        value = "$" + std::to_string(amount/100);
+    }
+
+    else {
+        value = std::to_string(amount) + "c";
+    }
+
+    return value;
+}   

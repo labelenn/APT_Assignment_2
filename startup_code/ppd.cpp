@@ -21,7 +21,7 @@ using std::vector;
  * Make sure free memory and close all files before exiting the program.
  **/
 string displayMainMenu();
-void purchaseItem(LinkedList *stock);
+void purchaseItem(LinkedList *stock, CashRegister *cregister, Coin* coins);
 
 int main(int argc, char **argv)
 {
@@ -76,9 +76,8 @@ int main(int argc, char **argv)
 
             else if (menuChoice == "2") 
             {
-                //purchase items
-                purchaseItem(stockList);
-
+                // Purchase Item
+                purchaseItem(stockList, cr, coin);
                 
             }
 
@@ -190,9 +189,9 @@ string displayMainMenu() {
     return menuChoice;
 }
 
-void purchaseItem(LinkedList *stock) {
+void purchaseItem(LinkedList *stock, CashRegister *cregister , Coin* coinsRegister) {
     
-    // Find item in the list
+    // FIND ITEM IN THE LIST
     string itemID;
     bool cancelPurchase = false;
 
@@ -229,6 +228,8 @@ void purchaseItem(LinkedList *stock) {
         }
     }
 
+
+    // ITEM FOUND, PROCEED TO PURCHASE PROCESS
     if (cancelPurchase != true) {
         // Store item into a Stock object
         Stock item = stock->getItem(itemID);
@@ -238,14 +239,15 @@ void purchaseItem(LinkedList *stock) {
         while (purchaseDone != true)
         {   
 
-            // Check stock availability
+            // CHECK STOCK AVAILABILITY
             bool available = stock->itemAvailability(itemID);
             if (available == true) {
                 vector<string> coins;
+                vector<string> changeCoins;
                 cout << "You have selected \"" << item.name << " - " << item.description << "\". ";
                 cout << "This will cost you $ " << item.price->dollars << "." << item.price->cents << "." << endl;
 
-                // Prompt for payment
+                // PROMPT FOR PAYMENT UNTIL THE USER QUITS OR THE USER PROVIDES THE REQUIRED AMOUNT
                 cout << "Please hand over the money - type in the value of each note/coin in cents." << endl;
                 cout << "Press enter or ctrl-d on a new line to cancel this purhcase:" << endl;
                 bool cancel = false;
@@ -257,11 +259,11 @@ void purchaseItem(LinkedList *stock) {
                     if  (remainingAmount >= 100) {
                         int dollar = (remainingAmount / 100);
                         int cents = remainingAmount - ((remainingAmount / 100) * 100);
-                        cout << "You still need to give us $" << dollar << "." << cents << ": " << endl;
+                        cout << "You still need to give us $" << dollar << "." << cents << ": ";
                     }
 
                     else {
-                        cout << "You still need to give us $0." << remainingAmount << ": " << endl;
+                        cout << "You still need to give us $0." << remainingAmount << ": ";
                     }
                     
                     string userAmount;
@@ -269,49 +271,90 @@ void purchaseItem(LinkedList *stock) {
 
                     if (userAmount.size() == 0 || cin.eof()) {
                         int numCoins = coins.size();
-                        cout << "Change of mind - here is your change:" << endl;
+                        cout << "Change of mind - here is your change: ";
                         for (int i = 0; i < numCoins; i++) {
-                            cout << coins[i] << " ";
+                            cout << cregister->getValueInDollars(coins[i]) << " ";
                         }
-                        cout << endl;
+        
+                        cout << endl << endl;
                         cancel = true;
                         purchaseDone = true;
                     }
 
-                    // TODO: INPUT VALIDATION FOR AMOUNT AND DENOMINATION
+                    
                     else {
-                    coins.push_back(userAmount);
-                    currAmount += stoi(userAmount);
+                        // Check if userAmount is a valid denomination
+                        bool valid = cregister->validDenomination(userAmount);
+
+                        if (valid == true) {
+                            coins.push_back(userAmount);
+                            currAmount += stoi(userAmount);
+                        }
+
+                        else {
+                            if (stoi(userAmount) >= 100) {
+                                int amount = stoi(userAmount);
+                                int dollar = (amount/100);
+                                int cents = amount - (dollar * 100);
+                                cout << "Error: $" << dollar << "." << cents << " is not a valid denomination of money. Please try again." << endl;
+                            }
+
+                            else {
+                                cout << "Error: $0." << userAmount << " is not a valid denomination of money. Please try again." << endl;
+                            }
+                        }
                     }
                 }
 
-                // TODO: PURCHASE COMPLETED
+                // PURCHASE COMPLETED - THE USER PROVIDED REQUIRED AMOUNT
                 if (currAmount >= requiredAmount) {
                     int change = currAmount - requiredAmount;
                     
-                    if  (change >= 100) {
-                        int dollar = (change / 100);
-                        int cents = change - ((change / 100) * 100);
-                        cout << "Here is your " << item.name << " and your change of $" << dollar << "." << cents << ": ";
+                    // Get list of coins for change
+                    changeCoins = cregister->getChange(change);
+                    int numCoins = changeCoins.size();
+
+                    // Check if there are enough coins in the register to provide the change. If not, display a message, purchase will be cancelled.
+                    bool coinsEnough = cregister->checkCoinAvailability(changeCoins, coinsRegister);
+
+                    if (coinsEnough == true) {
+                        if  (change >= 100) {
+                            int dollar = (change / 100);
+                            int cents = change - ((change / 100) * 100);
+                            cout << "Here is your " << item.name << " and your change of $" << dollar << "." << cents << ": ";
+                        }
+
+                        else {
+                            cout << "Here is your " << item.name << " and your change of $0." << change << ": ";
+
+                        }
+
+                        for (int i = 0; i < numCoins; i++) {
+                            cout << cregister->getValueInDollars(changeCoins[i]) << " ";
+                        }
+                    
+                        cout << endl << endl;
+
+                        // ADJUST STOCK COUNT AND COIN COUNT
+                        cregister->updateCoinCount(coins, coinsRegister, 1);
+                        cregister->updateCoinCount(changeCoins, coinsRegister, 0);
+                        stock->updateItemCount(itemID);
                     }
 
                     else {
-                        cout << "Here is your " << item.name << " and your change of $0." << change << ": ";
-
+                        cout << "There is not enough coins in the system to supply the change for the given amount." << endl << endl;
                     }
-                    
-                    // TODO: Print out list of coins for change
-                    cout << endl;
                     purchaseDone = true;
                 }
+
+                
             }
 
             else {
-                cout << "Item unavaiable" << endl;
+                cout << "Item unavaiable." << endl;
                 purchaseDone = true;
             }  
-
         }
     }
-
 }
+

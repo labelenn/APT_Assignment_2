@@ -15,6 +15,8 @@ Coin::~Coin() {
 }
 
 // implement functions for managing coins; this may depend on your design.
+
+
 Denomination Coin::getDenom(string amount) {
     Denomination d = FIVE_CENTS;
 

@@ -160,18 +160,8 @@ void LinkedList::updateItemCount(string selectedID)
         currentNode = currentNode->next;
     }
 
-    // cout << currentNode->data->on_hand << endl;
-    if (currentNode->data->on_hand == 0)
-    {
-        cout << "We have no more of this item." << endl;
-    }
-
-    else 
-    {
-        currentNode->data->on_hand--;
-    }
-
-    return;
+    currentNode->data->on_hand--;
+    
 }
 
 // Add item in correct sort spot
