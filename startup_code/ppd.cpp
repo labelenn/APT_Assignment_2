@@ -130,7 +130,7 @@ int main(int argc, char **argv)
                 //remove item
                 cout << "Enter the id of the item you want to remove: " << endl;
                 string removeID;
-                cin >> removeID;
+                getline(cin, removeID);
                 stockList->removeItem(removeID);
 
             }

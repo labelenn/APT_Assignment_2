@@ -241,7 +241,7 @@ void LinkedList::removeItem(string removeID)
     // If the last node matches
     else if (tail->data->id == removeID)
     {
-
+        cout << "removing last element" << endl;
         Node *currentNode = head;
         Node *tmp = tail;
 
@@ -250,8 +250,9 @@ void LinkedList::removeItem(string removeID)
             currentNode = currentNode->next;
         }
 
+        tail = currentNode;
         currentNode->next = nullptr;
-
+        
         cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - "
              << tmp->data->description << "\""
              << " has been removed from the system." << endl;
@@ -263,35 +264,35 @@ void LinkedList::removeItem(string removeID)
     else
     {
         Node *currentNode = head;
+        bool itemFound = false;
 
         // Finds id by traversing through the LinkedList
-        while (currentNode != nullptr && currentNode->data->id != removeID)
+        while (currentNode != nullptr && currentNode->next != nullptr && currentNode->data->id != removeID)
         {
+            // If id matches 
+            if(currentNode->next->next != nullptr && currentNode->next->data->id == removeID) 
+            {
+                itemFound = true;
+
+                cout << "\"" << currentNode->next->data->id << " - " << currentNode->next->data->name << " - "
+                 << currentNode->next->data->description << "\""
+                 << " has been removed from the system." << endl;
+                
+                Node *tmp = currentNode->next;
+                currentNode->next = currentNode->next->next;
+
+                delete tmp;
+            } 
+
             currentNode = currentNode->next;
         }
 
         // If the id was not found
-        if (currentNode == nullptr)
+        if (!itemFound)
         {
             cout << "The task Remove Item failed to run successfully." << endl;
         }
-
-        // Relinks the LinkedList after after removing a node
-        else
-        {
-            cout << "\"" << currentNode->data->id << " - " << currentNode->data->name << " - "
-                 << currentNode->data->description << "\""
-                 << " has been removed from the system." << endl;
-
-            Node *tmp = currentNode->next;
-            currentNode->data = tmp->data;
-            currentNode->next = tmp->next;
-
-            delete tmp;
-        }
     }
-
-    return;
 }
 
 void LinkedList::resetStockCount()
