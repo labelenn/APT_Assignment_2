@@ -84,14 +84,14 @@ int main(int argc, char **argv)
             else if (menuChoice == "3") 
             {
                 // Save stock data
-                std::ofstream testStockFile("stockTest.dat");
-                testStockFile << stockList->exportData();
-                testStockFile.close();
+                std::ofstream stockFile("stock.dat");
+                stockFile << stockList->exportData();
+                stockFile.close();
 
                 // Save coin data
-                std::ofstream testCoinsFile("coinsTest.dat");
-                testCoinsFile << cr->exportData(coin);
-                testCoinsFile.close();
+                std::ofstream coinsFile("coins.dat");
+                coinsFile << cr->exportData(coin);
+                coinsFile.close();
 
                 // Free allocated memory for linked list
                 stockList->~LinkedList();
