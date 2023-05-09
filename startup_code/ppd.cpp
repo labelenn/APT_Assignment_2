@@ -83,7 +83,24 @@ int main(int argc, char **argv)
 
             else if (menuChoice == "3") 
             {
-                //save and exit
+                // Save stock data
+                std::ofstream testStockFile("stockTest.dat");
+                testStockFile << stockList->exportData();
+                testStockFile.close();
+
+                // Save coin data
+                std::ofstream testCoinsFile("coinsTest.dat");
+                testCoinsFile << cr->exportData(coin);
+                testCoinsFile.close();
+
+                // Free allocated memory for linked list
+                stockList->~LinkedList();
+
+                // Free allocated memory for cash register
+                cr->~CashRegister();
+                
+                // Exit program
+                menu = false;
             }
 
             else if (menuChoice == "4") 

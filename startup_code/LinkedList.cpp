@@ -75,6 +75,15 @@ LinkedList::LinkedList(string stockDataFile)
 
 LinkedList::~LinkedList()
 {
+    Node *currentNode = head;
+    Node *nextNode = head->next;
+
+    while (currentNode != nullptr) {
+        currentNode->~Node();
+        currentNode = nextNode;
+        nextNode = currentNode->next;
+    }
+
     cout << "Linked List destroyed" << endl;
 }
 
@@ -173,8 +182,6 @@ void LinkedList::updateItemCount(string selectedID)
     }
 
     currentNode->data->on_hand--;
-    
-
 }
 
 // Add item in correct sort spot
@@ -217,6 +224,7 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
 }
 
 // Kiran
+// TODO - Need to destrtoy the item when you remove it.
 void LinkedList::removeItem(string removeID)
 {
     // If there are no items in the stock menu
@@ -252,7 +260,7 @@ void LinkedList::removeItem(string removeID)
 
         tail = currentNode;
         currentNode->next = nullptr;
-        
+
         cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - "
              << tmp->data->description << "\""
              << " has been removed from the system." << endl;
@@ -269,20 +277,20 @@ void LinkedList::removeItem(string removeID)
         // Finds id by traversing through the LinkedList
         while (currentNode != nullptr && currentNode->next != nullptr && currentNode->data->id != removeID)
         {
-            // If id matches 
-            if(currentNode->next->next != nullptr && currentNode->next->data->id == removeID) 
+            // If id matches
+            if (currentNode->next->next != nullptr && currentNode->next->data->id == removeID)
             {
                 itemFound = true;
 
                 cout << "\"" << currentNode->next->data->id << " - " << currentNode->next->data->name << " - "
-                 << currentNode->next->data->description << "\""
-                 << " has been removed from the system." << endl;
-                
+                     << currentNode->next->data->description << "\""
+                     << " has been removed from the system." << endl;
+
                 Node *tmp = currentNode->next;
                 currentNode->next = currentNode->next->next;
 
                 delete tmp;
-            } 
+            }
 
             currentNode = currentNode->next;
         }
@@ -340,6 +348,27 @@ void LinkedList::displayItems()
 
 string LinkedList::exportData()
 {
-    // TODO
-    return "";
+    
+    Node *currentNode = head;
+    string exportData;
+
+    while (currentNode != nullptr)
+    {
+        string id = currentNode->data->id;
+        string itemName = currentNode->data->name;
+        string description = currentNode->data->description;
+        string itemCount = std::to_string(currentNode->data->on_hand);
+        string priceDollars = std::to_string(currentNode->data->price->dollars);
+        string priceCents = std::to_string(currentNode->data->price->cents);
+
+        exportData += id + "|";
+        exportData += itemName + "|";
+        exportData += description + "|";
+        exportData += priceDollars + "." + ((priceCents == "0") ? "00" : priceCents) + "|";
+        exportData += itemCount + "\n";
+
+        currentNode = currentNode->next;
+    }
+
+    return exportData;
 }

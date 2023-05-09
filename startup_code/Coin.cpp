@@ -11,7 +11,7 @@ Coin::Coin(){
 }
  
 Coin::~Coin() {
-    // cout << "Coin Destroyed" << endl;
+    cout << "Coin Destroyed" << endl;
 }
 
 // implement functions for managing coins; this may depend on your design.

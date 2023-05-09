@@ -18,6 +18,9 @@ public:
     // load coin data file into an array
     void loadCoinData(string coinDataFile, Coin *coins);
 
+    // Destroy cash register
+    ~CashRegister();
+
     // display coin data
     void displayCoins(Coin *coins);
 
@@ -43,6 +46,9 @@ public:
 
     // Get value of cents in dollars
     string getValueInDollars(string);
+
+    // Export data
+    string exportData(Coin *coins);
 
     // vector of ints of the denominations in the cash register
     vector<int> denoms;
