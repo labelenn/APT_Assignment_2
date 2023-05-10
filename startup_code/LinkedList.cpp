@@ -76,12 +76,10 @@ LinkedList::LinkedList(string stockDataFile)
 LinkedList::~LinkedList()
 {
     Node *currentNode = head;
-    Node *nextNode = head->next;
 
     while (currentNode != nullptr) {
         currentNode->~Node();
-        currentNode = nextNode;
-        nextNode = currentNode->next;
+        currentNode = currentNode->next;
     }
 
     cout << "Linked List destroyed" << endl;
