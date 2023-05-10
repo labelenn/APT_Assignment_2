@@ -173,6 +173,7 @@ bool LinkedList::itemAvailability(string itemID)
 void LinkedList::updateItemCount(string selectedID)
 {
     Node *currentNode = head;
+    
     // Finds id by traversing through the LinkedList
     while (currentNode != nullptr && currentNode->data->id != selectedID)
     {
@@ -222,7 +223,6 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
 }
 
 // Kiran
-// TODO - Need to destrtoy the item when you remove it.
 void LinkedList::removeItem(string removeID)
 {
     // If there are no items in the stock menu
@@ -306,16 +306,31 @@ void LinkedList::resetStockCount()
 {
     Node *currentNode = head;
 
-    // Traverses through the LinkedList 
-    while (currentNode->next != nullptr)
+    // If there are no items in the stock menu
+    if (head == nullptr)
     {
-        currentNode->data->on_hand = DEFAULT_STOCK_LEVEL;
-        currentNode = currentNode->next;
+        cout << "The task Reset Stock Count failed to run successfully." << endl;
     }
 
-    tail->data->on_hand = DEFAULT_STOCK_LEVEL;
+    // If there is 1 item in the stock menu
+    else if (head == tail) 
+    {
+        tail->data->on_hand = DEFAULT_STOCK_LEVEL;
+        cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
+    }
 
-    cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
+    else
+    {
+        // Traverses through the LinkedList 
+        while (currentNode->next != nullptr)
+        {
+            currentNode->data->on_hand = DEFAULT_STOCK_LEVEL;
+            currentNode = currentNode->next;
+        }
+
+        tail->data->on_hand = DEFAULT_STOCK_LEVEL;
+        cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
+    }
 }
 
 // Lance
