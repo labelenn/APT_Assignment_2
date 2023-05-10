@@ -56,7 +56,7 @@ void CashRegister::loadCoinData(string coinDataFile, Coin *coins)
 }
 
 CashRegister::~CashRegister() {
-    cout << "Cash Register destroyed" << endl;
+    //cout << "Cash Register destroyed" << endl;
 }
 
 void CashRegister::displayCoins(Coin *coins)

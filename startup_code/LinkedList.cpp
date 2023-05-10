@@ -82,7 +82,7 @@ LinkedList::~LinkedList()
         currentNode = currentNode->next;
     }
 
-    cout << "Linked List destroyed" << endl;
+    //cout << "Linked List destroyed" << endl;
 }
 
 // Laura

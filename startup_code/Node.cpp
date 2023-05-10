@@ -7,9 +7,8 @@ Node::Node(Stock* stock, Node* node) {
 };
 Node::~Node() {
     data->~Stock();
-    cout << "Node destroyed" << endl;
+    // cout << "Node destroyed" << endl;
 };
-
 
 // Price initialisation and desctruction
 Price::Price(unsigned dollars, unsigned cents) {
@@ -17,9 +16,8 @@ Price::Price(unsigned dollars, unsigned cents) {
     this->cents = cents;
 };
 Price::~Price() {
-    cout << "Price destroyed" << endl;
+    // cout << "Price destroyed" << endl;
 };
-
 
 // Stock initialisation and desctruction
 Stock::Stock(string id, string name, string description, Price* price, unsigned on_hand) {
@@ -31,5 +29,5 @@ Stock::Stock(string id, string name, string description, Price* price, unsigned 
 };
 Stock::~Stock() {
     price->~Price();
-    cout << "Stock destroyed" << endl;
+    // cout << "Stock destroyed" << endl;
 };
