@@ -84,12 +84,12 @@ int main(int argc, char **argv)
             else if (menuChoice == "3") 
             {
                 // Save stock data
-                std::ofstream stockFile("stockTest.dat");
+                std::ofstream stockFile("stock.dat");
                 stockFile << stockList->exportData();
                 stockFile.close();
 
                 // Save coin data
-                std::ofstream coinsFile("coinsTest.dat");
+                std::ofstream coinsFile("coins.dat");
                 coinsFile << cr->exportData(coin);
                 coinsFile.close();
 
