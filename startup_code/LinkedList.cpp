@@ -314,6 +314,8 @@ void LinkedList::resetStockCount()
     }
 
     tail->data->on_hand = DEFAULT_STOCK_LEVEL;
+
+    cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
 }
 
 // Lance
