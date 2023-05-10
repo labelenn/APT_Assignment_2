@@ -161,6 +161,7 @@ int main(int argc, char **argv)
             else if (menuChoice == "7") 
             {
                 //reset stock
+                stockList->resetStockCount();
             }
 
             else if (menuChoice == "8") 

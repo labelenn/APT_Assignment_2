@@ -301,9 +301,19 @@ void LinkedList::removeItem(string removeID)
     }
 }
 
+// Kiran
 void LinkedList::resetStockCount()
 {
-    // TODO
+    Node *currentNode = head;
+
+    // Traverses through the LinkedList 
+    while (currentNode->next != nullptr)
+    {
+        currentNode->data->on_hand = DEFAULT_STOCK_LEVEL;
+        currentNode = currentNode->next;
+    }
+
+    tail->data->on_hand = DEFAULT_STOCK_LEVEL;
 }
 
 // Lance
