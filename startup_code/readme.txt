@@ -16,3 +16,11 @@ g++ -Wall -Werror -std=c++14 -O -o LinkedListTest LinkedListTest.cpp Node.cpp Li
 Execute command:
 ./LinkedListTest
 
+
+Run a test:
+./ppd stock.dat coins.dat <tests/<subFolder>/<test>.input > tests/<subFolder>/<test>.actual_ppd_out
+eg:
+    - ./ppd stock.dat coins.dat <tests/PurchaseTests/Item_overpay.input > tests/PurchaseTests/Item_overpay.actual_ppd_out
+    - This will run test for Item_overpay
+
+
