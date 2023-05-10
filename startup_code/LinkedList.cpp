@@ -126,14 +126,21 @@ bool LinkedList::findItem(string itemID)
 {
     Node *currentNode = head;
     bool itemFound = false;
-    while (currentNode->next != nullptr && currentNode->data->id != itemID)
-    {
 
-        currentNode = currentNode->next;
+    if (head->data->id == itemID) {
+        itemFound = true;
+    }
 
-        if (currentNode->data->id == itemID)
+    else {
+        while (currentNode->next != nullptr && currentNode->data->id != itemID)
         {
-            itemFound = true;
+
+            currentNode = currentNode->next;
+
+            if (currentNode->data->id == itemID)
+            {
+                itemFound = true;
+            }
         }
     }
 
