@@ -173,6 +173,13 @@ int main(int argc, char **argv)
             else if (menuChoice == "9") 
             {
                 //abort program
+                
+                // Free allocated memory for linked list
+                stockList->~LinkedList();
+
+                // Free allocated memory for cash register
+                cr->~CashRegister();
+
                 menu = false;
             }
 
