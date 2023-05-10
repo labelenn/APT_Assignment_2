@@ -27,7 +27,6 @@ LinkedList::LinkedList(string stockDataFile)
     string fileLine;
     std::ifstream stockFile;
     stockFile.open(stockDataFile);
-
     if (stockFile.is_open())
     {
         while (stockFile.peek() != EOF)
@@ -63,8 +62,6 @@ LinkedList::LinkedList(string stockDataFile)
                 tail = node;
             }
 
-            // Store last itemID for addItem function
-            lastItemID = stoi(id.substr(1, 5));
         }
 
         stockFile.close();
@@ -188,6 +185,29 @@ void LinkedList::updateItemCount(string selectedID)
     }
 
     currentNode->data->on_hand--;
+}
+
+void LinkedList::findHighestID() {
+    Node *currNode = head;
+    int highestID = 0;
+    int currentID = 0;
+
+    if (currNode == nullptr) {
+        highestID = 0001;
+    }
+
+    else {
+        while (currNode != nullptr) {
+            currentID = stoi(currNode->data->id.substr(1,4));
+
+            if (currentID > highestID) {
+                highestID = currentID;
+            }
+
+            currNode = currNode->next;
+        }
+    lastItemID = highestID;
+    }
 }
 
 // Add item in correct sort spot

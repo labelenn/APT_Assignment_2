@@ -26,6 +26,9 @@ public:
     // Update node/item count (for when item is purchased -- item on hand number (number of stock for that item) is deducted)
     void updateItemCount(string);
 
+    // Find highest id 
+    void findHighestID();
+
     // Add node/item
     void addItem(string, string, string, string);
 

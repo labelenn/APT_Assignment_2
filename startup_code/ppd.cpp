@@ -8,6 +8,7 @@
 #include <cctype>
 #include <cstring>
 #include <vector>
+#include <string>
 
 using std::string;
 using std::cout;
@@ -48,9 +49,9 @@ int main(int argc, char **argv)
 
     CashRegister* cr = new CashRegister(); 
     string dataFile = argv[2];
-    Coin x[8];
+    Coin c[8];
     Coin *coin = new Coin;
-    coin = x;
+    coin = c;
     cr->loadCoinData(dataFile, coin);
 
     
@@ -105,7 +106,7 @@ int main(int argc, char **argv)
 
             else if (menuChoice == "4") 
             {   
-
+                stockList->findHighestID();
                 static int nextId = stockList->lastItemID;
                 std::stringstream ss;
                 ss << "I" << std::setfill('0') << std::setw(4) << ++nextId;
