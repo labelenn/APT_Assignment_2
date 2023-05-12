@@ -9,6 +9,7 @@ Administrator-Only Menu:
    7.Reset Stock
    8.Reset Coins
    9.Abort Program
+
 Select your option (1-9):
 All stock has been reset to the default level of 20
 Main Menu:
@@ -22,6 +23,7 @@ Administrator-Only Menu:
    7.Reset Stock
    8.Reset Coins
    9.Abort Program
+
 Select your option (1-9):
 All coins has been reset to the default level of 20
 Main Menu:
@@ -35,6 +37,7 @@ Administrator-Only Menu:
    7.Reset Stock
    8.Reset Coins
    9.Abort Program
+
 Select your option (1-9):
 Purchase Item
 -------------
@@ -54,4 +57,5 @@ Administrator-Only Menu:
    7.Reset Stock
    8.Reset Coins
    9.Abort Program
+
 Select your option (1-9):

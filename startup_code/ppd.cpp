@@ -153,14 +153,17 @@ int main(int argc, char **argv)
                         newItemName[i] = tolower(newItemName[i]);
                     }
                 }
+                cout << endl;
                 // get item description
                 cout << "Enter the item description: ";
                 string newItemDescription;
                 getline(cin, newItemDescription);
+                cout << endl;
                 // get item price
                 cout << "Enter the price for the item: ";
                 string newItemPrice;
                 getline(cin, newItemPrice);
+                cout << endl;
                 // send data to addItem
                 stockList->addItem(id, newItemName, newItemDescription, newItemPrice);
             }
