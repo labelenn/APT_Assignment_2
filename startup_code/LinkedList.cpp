@@ -316,7 +316,7 @@ void LinkedList::removeItem(string removeID)
     else
     {
         // If the first node matches
-        else if (head->data->id == removeID)
+        if (head->data->id == removeID)
         {
             Node *tmp = head;
             head = head->next;
@@ -399,7 +399,7 @@ void LinkedList::resetStockCount()
     else
     {
         // If there is 1 item in the stock menu
-        else if (head == tail)
+        if (head == tail)
         {
             tail->data->on_hand = DEFAULT_STOCK_LEVEL;
             cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
