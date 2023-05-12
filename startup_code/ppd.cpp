@@ -73,6 +73,7 @@ int main(int argc, char **argv)
             {
                 //display items
                 stockList->displayItems();
+                cout << endl;
             }
 
             else if (menuChoice == "2") 
