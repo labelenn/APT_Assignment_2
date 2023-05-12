@@ -43,7 +43,6 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-
     // Read in data file contents
     LinkedList* stockList = new LinkedList(argv[1]);
 
@@ -257,7 +256,7 @@ void purchaseItem(LinkedList *stock, CashRegister *cregister , Coin* coinsRegist
             getline(cin, itemID);
 
             if (itemID.size() == 0 || cin.eof()) {
-                cout << "The task Purchase Item failed to run successfully." << endl;
+                cout << "\nThe task Purchase Item failed to run successfully." << endl;
                 cancelPurchase = true;
                 itemFound = true;
                 inputExiter = true;
@@ -286,7 +285,7 @@ void purchaseItem(LinkedList *stock, CashRegister *cregister , Coin* coinsRegist
 
         // PURCHASE PROCESS
         bool purchaseDone = false;
-        while (purchaseDone != true)
+        while (purchaseDone != true && item.name != "")
         {   
 
             // CHECK STOCK AVAILABILITY
@@ -321,7 +320,7 @@ void purchaseItem(LinkedList *stock, CashRegister *cregister , Coin* coinsRegist
 
                     if (userAmount.size() == 0 || cin.eof()) {
                         int numCoins = coins.size();
-                        cout << "Change of mind - here is your change: ";
+                        cout << "\nChange of mind - here is your change: ";
                         for (int i = 0; i < numCoins; i++) {
                             cout << cregister->getValueInDollars(coins[i]) << " ";
                         }
@@ -405,6 +404,7 @@ void purchaseItem(LinkedList *stock, CashRegister *cregister , Coin* coinsRegist
                 purchaseDone = true;
             }  
         }
+
     }
 }
 

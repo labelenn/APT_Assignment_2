@@ -24,62 +24,89 @@ LinkedList::LinkedList(string stockDataFile)
     head = nullptr;
     tail = nullptr;
 
+    bool inputError = false;
     string fileLine;
     std::ifstream stockFile;
     stockFile.open(stockDataFile);
     if (stockFile.is_open())
     {
-        while (stockFile.peek() != EOF)
+        while (stockFile.peek() != EOF && inputError == false)
         {
             std::getline(stockFile, fileLine);
 
-            vector<string> stock_list;
-            Helper::splitString(fileLine, stock_list, STOCK_DELIM);
-
-            // TODO - Check validity of stock info
-            string id = stock_list[0];
-            string name = stock_list[1];
-            string description = stock_list[2];
-            unsigned on_hand = stoi(stock_list[4]);
-
-            vector<string> split_price;
-            Helper::splitString(stock_list[3], split_price, PRICE_DELIM);
-            Price *price = new Price(stoi(split_price[0]), stoi(split_price[1]));
-
-            Stock *stock = new Stock(id, name, description, price, on_hand);
-
-            Node *node = new Node(stock, nullptr);
-
-            if (head == nullptr)
+            if (fileLine.size() > 0)
             {
-                head = node;
-                tail = node;
+
+                vector<string> stock_list;
+                Helper::splitString(fileLine, stock_list, STOCK_DELIM);
+
+                if (stock_list.size() == 5)
+                {
+                    // TODO - Check validity of stock info
+                    string id = stock_list[0];
+                    string name = stock_list[1];
+                    string description = stock_list[2];
+                    unsigned on_hand = stoi(stock_list[4]);
+
+                    vector<string> split_price;
+                    Helper::splitString(stock_list[3], split_price, PRICE_DELIM);
+                    Price *price = new Price(stoi(split_price[0]), stoi(split_price[1]));
+
+                    Stock *stock = new Stock(id, name, description, price, on_hand);
+
+                    Node *node = new Node(stock, nullptr);
+
+                    if (head == nullptr)
+                    {
+                        head = node;
+                        tail = node;
+                    }
+                    else
+                    {
+                        // Node* previousTail = tail;
+                        tail->next = node;
+                        tail = node;
+                    }
+                }
+                else
+                {
+                    cout << "item does not match expected format in input file" << endl;
+                }
             }
             else
             {
-                // Node* previousTail = tail;
-                tail->next = node;
-                tail = node;
+                cout << "line is empty in stock input file" << endl;
             }
-
         }
 
         stockFile.close();
-    }
 
-    LinkedList::sortLinkedList();
+        if (head != nullptr)
+        {
+            LinkedList::sortLinkedList();
+        }
+        else
+        {
+            cout << "stock input file was empty or no inputs matched the required format" << endl;
+        }
+    }
+    else
+    {
+        cout << "Cannot open file." << endl;
+    }
 }
 
 LinkedList::~LinkedList()
 {
     Node *currentNode = head;
 
-    while (currentNode != nullptr) {
+    while (currentNode != nullptr)
+    {
         currentNode->~Node();
         currentNode = currentNode->next;
     }
 
-    //cout << "Linked List destroyed" << endl;
+    // cout << "Linked List destroyed" << endl;
 }
 
 // Laura
@@ -123,19 +150,24 @@ bool LinkedList::findItem(string itemID)
     Node *currentNode = head;
     bool itemFound = false;
 
-    if (head->data->id == itemID) {
-        itemFound = true;
-    }
-
-    else {
-        while (currentNode->next != nullptr && currentNode->data->id != itemID)
+    if (currentNode != nullptr)
+    {
+        if (head->data->id == itemID)
         {
+            itemFound = true;
+        }
 
-            currentNode = currentNode->next;
-
-            if (currentNode->data->id == itemID)
+        else
+        {
+            while (currentNode->next != nullptr && currentNode->data->id != itemID)
             {
-                itemFound = true;
+
+                currentNode = currentNode->next;
+
+                if (currentNode->data->id == itemID)
+                {
+                    itemFound = true;
+                }
             }
         }
     }
@@ -146,27 +178,40 @@ bool LinkedList::findItem(string itemID)
 Stock LinkedList::getItem(string itemID)
 {
     Node *currentNode = head;
-    while (currentNode->next != nullptr && currentNode->data->id != itemID)
+
+    // Temp values to return if the list is empty
+    Stock returnData;
+
+    if (currentNode != nullptr)
     {
-        currentNode = currentNode->next;
+        while (currentNode->next != nullptr && currentNode->data->id != itemID)
+        {
+            currentNode = currentNode->next;
+        }
+
+        returnData = *currentNode->data;
     }
 
-    return *currentNode->data;
+    return returnData;
 }
 
 bool LinkedList::itemAvailability(string itemID)
 {
 
     Node *currentNode = head;
-    while (currentNode->next != nullptr && currentNode->data->id != itemID)
-    {
-        currentNode = currentNode->next;
-    }
-
     bool itemAvailable = false;
-    if (currentNode->data->on_hand > 0)
+
+    if (currentNode != nullptr)
     {
-        itemAvailable = true;
+        while (currentNode->next != nullptr && currentNode->data->id != itemID)
+        {
+            currentNode = currentNode->next;
+        }
+
+        if (currentNode->data->on_hand > 0)
+        {
+            itemAvailable = true;
+        }
     }
 
     return itemAvailable;
@@ -176,48 +221,58 @@ bool LinkedList::itemAvailability(string itemID)
 void LinkedList::updateItemCount(string selectedID)
 {
     Node *currentNode = head;
-    
-    // Finds id by traversing through the LinkedList
-    while (currentNode != nullptr && currentNode->data->id != selectedID)
-    {
-        currentNode = currentNode->next;
-    }
 
-    currentNode->data->on_hand--;
+    if (currentNode != nullptr)
+    {
+        // Finds id by traversing through the LinkedList
+        while (currentNode != nullptr && currentNode->data->id != selectedID)
+        {
+            currentNode = currentNode->next;
+        }
+
+        currentNode->data->on_hand--;
+    }
 }
 
-void LinkedList::findHighestID() {
+void LinkedList::findHighestID()
+{
     Node *currNode = head;
     int highestID = 0;
     int currentID = 0;
 
-    if (currNode == nullptr) {
+    if (currNode == nullptr)
+    {
         highestID = 0001;
     }
 
-    else {
-        while (currNode != nullptr) {
-            currentID = stoi(currNode->data->id.substr(1,4));
+    else
+    {
+        while (currNode != nullptr)
+        {
+            currentID = stoi(currNode->data->id.substr(1, 4));
 
-            if (currentID > highestID) {
+            if (currentID > highestID)
+            {
                 highestID = currentID;
             }
 
             currNode = currNode->next;
         }
-    lastItemID = highestID;
+        lastItemID = highestID;
     }
 }
-
 
 // Laura
 void LinkedList::addItem(string id, string newItemName, string newItemDescription, string newItemPrice)
 {
     // create new Node* currentNode that holds the current node position
     Node *currentNode = head;
-    while (currentNode->next != nullptr)
+    if (currentNode != nullptr)
     {
-        currentNode = currentNode->next;
+        while (currentNode->next != nullptr)
+        {
+            currentNode = currentNode->next;
+        }
     }
 
     // default stock level
@@ -231,8 +286,16 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
 
     // make new node tail and currentNode->next point to this node
     Node *newNode = new Node(item, nullptr);
-    currentNode->next = newNode;
-    newNode = tail;
+    if (currentNode != nullptr)
+    {
+        currentNode->next = newNode;
+        tail = newNode;
+    }
+    else
+    {
+        head = newNode;
+        tail = newNode;
+    }
 
     // take list and sort it
     LinkedList::sortLinkedList();
@@ -250,79 +313,80 @@ void LinkedList::removeItem(string removeID)
         cout << "Error: desired id was not found." << endl;
         cout << "The task Remove Item failed to run successfully." << endl;
     }
-
-    // If the first node matches
-    else if (head->data->id == removeID)
-    {
-        Node *tmp = head;
-        head = head->next;
-
-        cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - "
-             << tmp->data->description << "\""
-             << " has been removed from the system." << endl;
-
-        delete tmp;
-    }
-
-    // If the last node matches
-    else if (tail->data->id == removeID)
-    {
-        cout << "removing last element" << endl;
-        Node *currentNode = head;
-        Node *tmp = tail;
-
-        while (currentNode->next->next != nullptr)
-        {
-            currentNode = currentNode->next;
-        }
-
-        tail = currentNode;
-        currentNode->next = nullptr;
-
-        cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - "
-             << tmp->data->description << "\""
-             << " has been removed from the system." << endl;
-
-        delete tmp;
-    }
-
-    // If not the first or last node
     else
     {
-        Node *currentNode = head;
-        bool itemFound = false;
-
-        // Finds id by traversing through the LinkedList
-        while (currentNode != nullptr && currentNode->next != nullptr && currentNode->data->id != removeID)
+        // If the first node matches
+        else if (head->data->id == removeID)
         {
-            // If id matches
-            if (currentNode->next->next != nullptr && currentNode->next->data->id == removeID)
-            {
-                itemFound = true;
+            Node *tmp = head;
+            head = head->next;
 
-                cout << "\"" << currentNode->next->data->id << " - " << currentNode->next->data->name << " - "
-                     << currentNode->next->data->description << "\""
-                     << " has been removed from the system." << endl;
+            cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - "
+                 << tmp->data->description << "\""
+                 << " has been removed from the system." << endl;
 
-                Node *tmp = currentNode->next;
-                currentNode->next = currentNode->next->next;
-
-                delete tmp;
-            }
-
-            currentNode = currentNode->next;
+            delete tmp;
         }
 
-        // If the id was not found
-        if (!itemFound)
+        // If the last node matches
+        else if (tail->data->id == removeID)
         {
-            cout << "Error: desired id was not found." << endl;
-            cout << "The task Remove Item failed to run successfully." << endl;
+            cout << "removing last element" << endl;
+            Node *currentNode = head;
+            Node *tmp = tail;
+
+            while (currentNode->next->next != nullptr)
+            {
+                currentNode = currentNode->next;
+            }
+
+            tail = currentNode;
+            currentNode->next = nullptr;
+
+            cout << "\"" << tmp->data->id << " - " << tmp->data->name << " - "
+                 << tmp->data->description << "\""
+                 << " has been removed from the system." << endl;
+
+            delete tmp;
+        }
+
+        // If not the first or last node
+        else
+        {
+            Node *currentNode = head;
+            bool itemFound = false;
+
+            // Finds id by traversing through the LinkedList
+            while (currentNode != nullptr && currentNode->next != nullptr && currentNode->data->id != removeID)
+            {
+                // If id matches
+                if (currentNode->next->next != nullptr && currentNode->next->data->id == removeID)
+                {
+                    itemFound = true;
+
+                    cout << "\"" << currentNode->next->data->id << " - " << currentNode->next->data->name << " - "
+                         << currentNode->next->data->description << "\""
+                         << " has been removed from the system." << endl;
+
+                    Node *tmp = currentNode->next;
+                    currentNode->next = currentNode->next->next;
+
+                    delete tmp;
+                }
+
+                currentNode = currentNode->next;
+            }
+
+            // If the id was not found
+            if (!itemFound)
+            {
+                cout << "Error: desired id was not found." << endl;
+                cout << "The task Remove Item failed to run successfully." << endl;
+            }
         }
     }
 }
 
-// Kiran
 void LinkedList::resetStockCount()
 {
     Node *currentNode = head;
@@ -332,29 +396,30 @@ void LinkedList::resetStockCount()
     {
         cout << "The task Reset Stock Count failed to run successfully." << endl;
     }
-
-    // If there is 1 item in the stock menu
-    else if (head == tail) 
-    {
-        tail->data->on_hand = DEFAULT_STOCK_LEVEL;
-        cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
-    }
-
     else
     {
-        // Traverses through the LinkedList 
-        while (currentNode->next != nullptr)
+        // If there is 1 item in the stock menu
+        else if (head == tail)
         {
-            currentNode->data->on_hand = DEFAULT_STOCK_LEVEL;
-            currentNode = currentNode->next;
+            tail->data->on_hand = DEFAULT_STOCK_LEVEL;
+            cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
         }
 
-        tail->data->on_hand = DEFAULT_STOCK_LEVEL;
-        cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
+        else
+        {
+            // Traverses through the LinkedList
+            while (currentNode->next != nullptr)
+            {
+                currentNode->data->on_hand = DEFAULT_STOCK_LEVEL;
+                currentNode = currentNode->next;
+            }
+
+            tail->data->on_hand = DEFAULT_STOCK_LEVEL;
+            cout << "All stock has been reset to the default level of " << DEFAULT_STOCK_LEVEL << endl;
+        }
     }
 }
 
-// Lance
 void LinkedList::displayItems()
 {
     int idPrintWidth = 6;
@@ -394,9 +459,9 @@ void LinkedList::displayItems()
 
 string LinkedList::exportData()
 {
-    
+
     Node *currentNode = head;
-    string exportData;
+    string exportData = "";
 
     while (currentNode != nullptr)
     {

@@ -73,7 +73,7 @@ bool CashRegister::validateCoinDataFile(string coinDataFile) {
         cout << "Cannot open file." << endl;
     }
 
-    cout << numDenoms << endl;
+    //cout << numDenoms << endl;
     // Finally, check that the number of denominations is 8
     if (numDenoms != 8) {
         validFile = false;

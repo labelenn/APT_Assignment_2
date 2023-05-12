@@ -19,6 +19,14 @@ Price::~Price() {
     // cout << "Price destroyed" << endl;
 };
 
+// Default constructor with no args
+Stock::Stock() {
+    this->id = "";
+    this->name = "";
+    this->description = "";
+    this->price = new Price(0,0);
+    this->on_hand = 0;
+};
 // Stock initialisation and desctruction
 Stock::Stock(string id, string name, string description, Price* price, unsigned on_hand) {
     this->id = id;

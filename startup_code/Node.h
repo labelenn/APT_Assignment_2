@@ -49,7 +49,7 @@ class Stock
 public:
     // Constructor
     Stock(string, string, string, Price*, unsigned);
-    
+    Stock();
     // Destructor
     ~Stock();
 
