@@ -247,6 +247,7 @@ void LinkedList::removeItem(string removeID)
     // If there are no items in the stock menu
     if (head == nullptr)
     {
+        cout << "Error: desired id was not found." << endl;
         cout << "The task Remove Item failed to run successfully." << endl;
     }
 
@@ -315,6 +316,7 @@ void LinkedList::removeItem(string removeID)
         // If the id was not found
         if (!itemFound)
         {
+            cout << "Error: desired id was not found." << endl;
             cout << "The task Remove Item failed to run successfully." << endl;
         }
     }
