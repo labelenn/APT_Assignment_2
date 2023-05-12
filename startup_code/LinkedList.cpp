@@ -316,7 +316,7 @@ void LinkedList::removeItem(string removeID)
     else
     {
         // If the first node matches
-        else if (head->data->id == removeID)
+        if (head->data->id == removeID)
         {
             Node *tmp = head;
             head = head->next;
