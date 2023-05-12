@@ -85,7 +85,6 @@ LinkedList::~LinkedList()
 // Laura
 void LinkedList::sortLinkedList()
 {
-
     // nothing to sort if head is null or theres only 1 item in the list
     if (head != nullptr && head->next != nullptr)
     {
@@ -210,16 +209,10 @@ void LinkedList::findHighestID() {
     }
 }
 
-// Add item in correct sort spot
-// EG when inserting 'Lemon Meringue Pie' it must go between 'Lemon cheesecake' and 'Lemon Tart'
-// Apple Pie -> Lemon Cheesecake -> Lemon Tart ->  Meat Pie
+
 // Laura
 void LinkedList::addItem(string id, string newItemName, string newItemDescription, string newItemPrice)
 {
-    // TODO
-    // NOTE: User is prompted for item name, description, and price.
-    // Refer to REQ7 for more details regarding the rest of the data for the item.
-
     // create new Node* currentNode that holds the current node position
     Node *currentNode = head;
     while (currentNode->next != nullptr)
@@ -227,22 +220,21 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
         currentNode = currentNode->next;
     }
 
-    // to do, update on_hand
+    // default stock level
     int on_hand = DEFAULT_STOCK_LEVEL;
-
-    // create a vectore string splitPrice
+    // split price string to obtain dollars and cents
     vector<string> splitPrice;
     Helper::splitString(newItemPrice, splitPrice, ".");
     // create new Price* price and Stock* item
     Price *price = new Price(stoi(splitPrice[0]), stoi(splitPrice[1]));
     Stock *item = new Stock(id, newItemName, newItemDescription, price, on_hand);
 
-    // create new Node* newNode for the node we are adding to linked list, and make its pointer nullptr
+    // make new node tail and currentNode->next point to this node
     Node *newNode = new Node(item, nullptr);
-
     currentNode->next = newNode;
     newNode = tail;
 
+    // take list and sort it
     LinkedList::sortLinkedList();
 
     // display new item information to show it has indeed been added to the menu

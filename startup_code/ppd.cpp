@@ -106,6 +106,7 @@ int main(int argc, char **argv)
 
             else if (menuChoice == "4") 
             {   
+                // finds the highest ID and sets next id 
                 stockList->findHighestID();
                 static int nextId = stockList->lastItemID;
                 std::stringstream ss;
@@ -113,6 +114,7 @@ int main(int argc, char **argv)
                 string id = ss.str();
                 cout << "The id of the new stock will be: " << id << endl;
                 
+                // gets name
                 cout << "Enter the item name: ";
                 string newItemName;
                 getline(cin, newItemName);
@@ -125,21 +127,24 @@ int main(int argc, char **argv)
                         newItemName[i] = toupper(newItemName[i]);
                         makeUppercase = false;
                     }
+                    // if index is a space
                     else if (newItemName[i] == ' ') {
                         makeUppercase = true;
                     }
+                    // uppercase all first letters of words in string
                     else if (makeUppercase == false && isalpha(newItemName[i])){
                         newItemName[i] = tolower(newItemName[i]);
                     }
                 }
-                
+                // get item description
                 cout << "Enter the item description: ";
                 string newItemDescription;
                 getline(cin, newItemDescription);
-                
+                // get item price
                 cout << "Enter the price for the item: ";
                 string newItemPrice;
                 getline(cin, newItemPrice);
+                // send data to addItem
                 stockList->addItem(id, newItemName, newItemDescription, newItemPrice);
             }
 
