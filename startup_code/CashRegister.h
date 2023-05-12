@@ -15,6 +15,9 @@ using std::vector;
 class CashRegister
 {
 public:
+    // Validate contents of the data file
+    bool validateCoinDataFile(string coinDataFile);
+
     // load coin data file into an array
     void loadCoinData(string coinDataFile, Coin *coins);
 

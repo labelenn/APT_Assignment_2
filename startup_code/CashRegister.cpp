@@ -19,6 +19,69 @@ using std::sort;
 using std::string;
 using std::vector;
 
+bool CashRegister::validateCoinDataFile(string coinDataFile) {
+    bool validFile = true;
+    string fileLine;
+    std::ifstream dFile;
+    dFile.open(coinDataFile);
+    int numDenoms = 0;
+
+    if (dFile.is_open()) 
+    {
+        while ((dFile.peek() != EOF) && (validFile == true))
+        {   
+
+            std::getline(dFile, fileLine);
+
+            // Check if there is an empty line
+            if (fileLine.size() == 0) {
+                validFile = false;
+            }
+
+            // If not, split the string
+            else {
+                vector<string> coinData;
+                Helper::splitString(fileLine, coinData, DELIM);
+
+                // vector should have two elements (denom, count)
+                if (coinData.size() != 2) {
+                    validFile = false;
+                }
+
+                // if yes, check that the first element in vector is a valid denomination
+                else {
+                    bool validDenom = false;
+                    string validDenoms[8] = {"1000", "500", "200", "100", "50", "20", "10", "5"};
+                    for (int i = 0; i < 8; i++) {
+                        if (coinData[0] == validDenoms[i]) {
+                            validDenom = true;
+                        }
+                    }
+
+                    if (validDenom == false) {
+                        validFile = false;
+                    }
+                }
+            }
+
+            numDenoms += 1;
+        }
+        dFile.close();
+    }
+
+    else {
+        cout << "Cannot open file." << endl;
+    }
+
+    cout << numDenoms << endl;
+    // Finally, check that the number of denominations is 8
+    if (numDenoms != 8) {
+        validFile = false;
+    }
+
+    return validFile;
+}
+
 void CashRegister::loadCoinData(string coinDataFile, Coin *coins)
 {
     string fileLine;

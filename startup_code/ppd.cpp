@@ -47,14 +47,31 @@ int main(int argc, char **argv)
     // Read in data file contents
     LinkedList* stockList = new LinkedList(argv[1]);
 
+    // Cash Register object for managing array of coins
     CashRegister* cr = new CashRegister(); 
     string dataFile = argv[2];
+
+    // Validate coin data file contents
+    try {
+        bool validCoinFile = cr->validateCoinDataFile(dataFile);
+
+        if (validCoinFile == false) {
+            throw(validCoinFile);
+        }
+    }
+
+    catch (bool valid){
+        cout << "Invalid Coin Data File." << endl;
+        return EXIT_FAILURE;
+    }
+
+    // Pointer type array of coins in the system
     Coin c[8];
     Coin *coin = new Coin;
     coin = c;
-    cr->loadCoinData(dataFile, coin);
 
-    
+    // Load coins data file into the pointer array of coins
+    cr->loadCoinData(dataFile, coin);
 
     // MAIN MENU
     bool menu = true;
