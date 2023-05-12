@@ -214,6 +214,7 @@ string displayMainMenu() {
     cout << "   7.Reset Stock" << endl;
     cout << "   8.Reset Coins" << endl;
     cout << "   9.Abort Program" << endl;
+    cout << endl;
     cout << "Select your option (1-9):" << endl;
     string menuChoice;
     std::getline(cin, menuChoice);
