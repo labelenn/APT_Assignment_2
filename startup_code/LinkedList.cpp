@@ -18,7 +18,7 @@ using std::setw;
 using std::string;
 using std::vector;
 
-// Mark
+
 LinkedList::LinkedList(string stockDataFile)
 {
     head = nullptr;
@@ -109,7 +109,7 @@ LinkedList::~LinkedList()
     // cout << "Linked List destroyed" << endl;
 }
 
-// Laura
+
 void LinkedList::sortLinkedList()
 {
     // nothing to sort if head is null or theres only 1 item in the list
@@ -217,7 +217,7 @@ bool LinkedList::itemAvailability(string itemID)
     return itemAvailable;
 }
 
-// Kiran
+
 void LinkedList::updateItemCount(string selectedID)
 {
     Node *currentNode = head;
@@ -262,7 +262,7 @@ void LinkedList::findHighestID()
     }
 }
 
-// Laura
+
 void LinkedList::addItem(string id, string newItemName, string newItemDescription, string newItemPrice)
 {
     // create new Node* currentNode that holds the current node position
@@ -304,7 +304,7 @@ void LinkedList::addItem(string id, string newItemName, string newItemDescriptio
     cout << "This item \"" << newItemName << " - " << newItemDescription << "\", has now been added to the menu." << endl;
 }
 
-// Kiran
+
 void LinkedList::removeItem(string removeID)
 {
     // If there are no items in the stock menu
