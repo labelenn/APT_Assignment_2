@@ -1,1 +1,9 @@
 .DS_Store
+
+# exclude object files
+*.o
+
+# and also the executable
+ppd
+
+# put any other file patterns you want to exclude
